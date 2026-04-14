@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adopción · PETS HUB</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral:       #FF5A45;
+      --coral-dark:  #E04330;
+      --dark:        #1C1C1E;
+      --footer-bg:   #111827;
+      --gray:        #6B7280;
+      --gray-light:  #F3F4F6;
+      --gray-border: #E5E7EB;
+      --white:       #FFFFFF;
+      --r:           12px;
+      --r-sm:        8px;
+      --r-pill:      100px;
+    }
+
+    html { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body {
+      background: var(--white);
+      color: var(--dark);
+      max-width: 430px;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+
+    /* ═══════════════════════════
+       HEADER (igual index)
+    ═══════════════════════════ */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; height: 60px;
+      background: var(--white); border-bottom: 1px solid var(--gray-border);
+    }
+    .header-logo { font-size: 18px; font-weight: 900; letter-spacing: 3px; color: var(--dark); }
+    .hamburger-btn {
+      background: none; border: none; cursor: pointer;
+      padding: 8px; font-size: 22px; color: var(--dark); line-height: 1;
+    }
+
+    /* ═══════════════════════════
+       NAV OVERLAY (igual index)
+    ═══════════════════════════ */
+    .nav-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,.45); opacity: 0;
+      pointer-events: none; transition: opacity .3s ease;
+    }
+    .nav-overlay.open { opacity: 1; pointer-events: all; }
+    .nav-drawer {
+      position: absolute; top: 0; right: 0;
+      width: 280px; height: 100%;
+      background: var(--white); padding: 20px;
+      transform: translateX(100%); transition: transform .3s ease;
+      display: flex; flex-direction: column;
+    }
+    .nav-overlay.open .nav-drawer { transform: translateX(0); }
+    .nav-close {
+      align-self: flex-end; background: none; border: none;
+      font-size: 22px; cursor: pointer; color: var(--dark);
+      padding: 6px; margin-bottom: 12px;
+    }
+    .nav-link {
+      display: block; padding: 14px 0; font-size: 16px; font-weight: 500;
+      color: var(--dark); text-decoration: none;
+      border-bottom: 1px solid var(--gray-border);
+    }
+    .nav-link:last-child { border-bottom: none; }
+
+    /* ═══════════════════════════
+       PAGE HEADER
+    ═══════════════════════════ */
+    .page-header {
+      display: flex; align-items: center;
+      padding: 0 20px; height: 52px;
+      background: var(--white); border-bottom: 1px solid var(--gray-border);
+    }
+    .page-header-back {
+      width: 36px; background: none; border: none;
+      font-size: 18px; color: var(--dark); cursor: pointer;
+      display: flex; align-items: center; flex-shrink: 0;
+    }
+    .page-header-title {
+      flex: 1; text-align: center;
+      font-size: 16px; font-weight: 700; color: var(--dark);
+    }
+    .page-header-spacer { width: 36px; flex-shrink: 0; }
+
+    /* ═══════════════════════════
+       CONTENIDO
+    ═══════════════════════════ */
+    .adop-content { padding: 20px 20px 0; }
+
+    /* Buscador */
+    .search-wrap { position: relative; margin-bottom: 16px; }
+    .search-input {
+      width: 100%; padding: 13px 44px 13px 16px;
+      border: 1.5px solid var(--gray-border); border-radius: var(--r-sm);
+      font-size: 15px; color: var(--dark);
+      background: var(--gray-light); outline: none;
+      transition: border-color .2s, background .2s;
+    }
+    .search-input:focus { border-color: var(--coral); background: var(--white); }
+    .search-input::placeholder { color: #A0AEC0; }
+    .search-icon {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 16px; color: var(--gray); pointer-events: none;
+    }
+
+    /* ═══════════════════════════
+       FILTROS CON DROPDOWN
+    ═══════════════════════════ */
+    .filters-row {
+      display: flex; gap: 10px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .filter-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px;
+      border-radius: var(--r-pill);
+      border: 1.5px solid var(--gray-border);
+      background: var(--white);
+      font-size: 13px; font-weight: 600; color: var(--dark);
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      position: relative;
+    }
+    .filter-btn.open, .filter-btn:hover { border-color: var(--coral); color: var(--coral); }
+    .filter-btn.selected { background: var(--coral); border-color: var(--coral); color: var(--white); }
+    .filter-btn i { font-size: 10px; transition: transform .2s; }
+    .filter-btn.open i { transform: rotate(180deg); }
+
+    .filter-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      background: var(--white);
+      border: 1.5px solid var(--gray-border);
+      border-radius: var(--r-sm);
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+      z-index: 50;
+      min-width: 180px;
+      overflow: hidden;
+    }
+    .filter-dropdown.open { display: block; }
+    .filter-option {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 16px;
+      font-size: 14px; color: var(--dark);
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .filter-option:hover { background: var(--gray-light); }
+    .filter-option input[type="radio"],
+    .filter-option input[type="checkbox"] { accent-color: var(--coral); width: 16px; height: 16px; }
+    .filter-option-label { font-size: 14px; }
+
+    /* ═══════════════════════════
+       PERFIL DE MASCOTA (Coco)
+    ═══════════════════════════ */
+    .pet-profile { margin-bottom: 36px; }
+
+    /* Galería horizontal */
+    .gallery-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px;
+    }
+    .gallery-title { font-size: 13px; font-weight: 700; color: var(--dark); }
+    .gallery-see-all {
+      font-size: 12px; font-weight: 600; color: var(--coral);
+      background: none; border: none; cursor: pointer;
+    }
+
+    .gallery-scroll {
+      display: flex; gap: 8px;
+      overflow-x: auto; padding-bottom: 4px;
+      scrollbar-width: none; margin-bottom: 20px;
+    }
+    .gallery-scroll::-webkit-scrollbar { display: none; }
+
+    .gallery-thumb {
+      flex: 0 0 110px; height: 90px;
+      background: var(--gray-light);
+      border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center;
+      color: #CBD5E1; font-size: 28px;
+      position: relative; overflow: hidden;
+      border: 1px solid var(--gray-border);
+    }
+    .gallery-thumb:first-child { border: 2px solid var(--coral); }
+
+    .gallery-thumb-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,.45);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: var(--white); font-size: 11px; font-weight: 700;
+      gap: 4px;
+    }
+    .gallery-thumb-overlay i { font-size: 20px; }
+
+    /* Ficha de datos */
+    .pet-name-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .pet-name {
+      font-size: 26px; font-weight: 900; color: var(--dark);
+      letter-spacing: -.5px;
+    }
+    .pet-available {
+      background: #ECFDF5; color: #059669;
+      font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: var(--r-pill);
+      letter-spacing: .5px;
+    }
+
+    .pet-tags {
+      display: flex; flex-wrap: wrap; gap: 7px;
+      margin-bottom: 16px;
+    }
+    .pet-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--r-pill);
+      background: var(--gray-light);
+      border: 1px solid var(--gray-border);
+      font-size: 12px; font-weight: 600; color: var(--dark);
+    }
+    .pet-tag i { font-size: 11px; color: var(--coral); }
+
+    /* Descripción */
+    .pet-desc { margin-bottom: 20px; }
+    .pet-desc p {
+      font-size: 14px; line-height: 1.7; color: #374151;
+      margin-bottom: 10px;
+    }
+    .pet-desc p:last-child { margin-bottom: 0; }
+    .pet-desc strong { color: var(--dark); }
+
+    /* Fundación */
+    .pet-foundation {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px;
+      background: #FFF7ED;
+      border: 1px solid #FED7AA;
+      border-radius: var(--r-sm);
+      margin-bottom: 20px;
+    }
+    .pet-foundation-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--coral); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .pet-foundation-text { font-size: 12px; color: var(--gray); }
+    .pet-foundation-name { font-size: 14px; font-weight: 700; color: var(--dark); }
+
+    /* CTA adoptar */
+    .btn-adoptar {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 16px;
+      background: var(--coral); color: var(--white);
+      font-size: 16px; font-weight: 800;
+      border: none; border-radius: var(--r-pill);
+      cursor: pointer; text-decoration: none;
+      transition: background .2s;
+      margin-bottom: 4px;
+    }
+    .btn-adoptar:hover { background: var(--coral-dark); }
+
+    /* ═══════════════════════════
+       SECCIÓN MASCOTAS DISPONIBLES
+    ═══════════════════════════ */
+    .section-block { margin-bottom: 36px; }
+    .section-block-title {
+      font-size: 20px; font-weight: 800; color: var(--dark);
+      margin-bottom: 16px; letter-spacing: -.3px;
+    }
+
+    .pets-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .pet-card {
+      background: var(--white);
+      border: 1px solid var(--gray-border);
+      border-radius: var(--r);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      cursor: pointer;
+      transition: box-shadow .2s;
+      position: relative;
+    }
+    .pet-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+
+    .pet-card-fav {
+      position: absolute; top: 8px; right: 8px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,.85);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: #D1D5DB;
+      transition: color .2s;
+    }
+    .pet-card-fav:hover { color: var(--coral); }
+    .pet-card-fav.active { color: var(--coral); }
+
+    .pet-card-img {
+      width: 100%; aspect-ratio: 1/1;
+      background: var(--gray-light);
+      display: flex; align-items: center; justify-content: center;
+      color: #CBD5E1; font-size: 40px;
+    }
+    .pet-card-body { padding: 10px 12px 12px; }
+
+    .pet-card-name {
+      font-size: 15px; font-weight: 800;
+      color: var(--dark); margin-bottom: 6px;
+    }
+    .pet-card-info {
+      display: flex; flex-wrap: wrap; gap: 5px;
+      margin-bottom: 8px;
+    }
+    .pet-card-badge {
+      font-size: 10px; font-weight: 600;
+      padding: 2px 8px; border-radius: var(--r-pill);
+      background: var(--gray-light); color: var(--gray);
+    }
+    .pet-card-badge.age  { background: #EEF2FF; color: #4F46E5; }
+    .pet-card-badge.size { background: #ECFDF5; color: #059669; }
+
+    .pet-card-location {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 11px; color: var(--gray); margin-bottom: 5px;
+    }
+    .pet-card-location i { color: var(--coral); font-size: 10px; }
+
+    .pet-card-org {
+      font-size: 10px; color: #9CA3AF;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* ═══════════════════════════
+       SECCIÓN ORGANIZACIONES
+    ═══════════════════════════ */
+    .orgs-scroll {
+      display: flex; gap: 12px;
+      overflow-x: auto; padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .orgs-scroll::-webkit-scrollbar { display: none; }
+
+    .org-card {
+      flex: 0 0 130px;
+      background: var(--white);
+      border: 1px solid var(--gray-border);
+      border-radius: var(--r);
+      padding: 16px 12px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      cursor: pointer;
+      transition: box-shadow .2s;
+      box-shadow: 0 2px 6px rgba(0,0,0,.04);
+    }
+    .org-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+
+    .org-logo {
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; color: var(--white);
+      flex-shrink: 0;
+    }
+    .org-name {
+      font-size: 12px; font-weight: 700; color: var(--dark);
+      text-align: center; line-height: 1.3;
+    }
+    .org-count {
+      font-size: 11px; color: var(--gray); text-align: center;
+    }
+    .org-count strong { color: var(--coral); }
+
+    /* ═══════════════════════════
+       BOTTOM NAV
+    ═══════════════════════════ */
+    .bottom-nav {
+      display: flex; border-top: 1px solid var(--gray-border);
+      background: var(--white);
+    }
+    .bottom-nav-item {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 5px; padding: 12px 4px;
+      text-decoration: none; color: var(--gray);
+      font-size: 10px; font-weight: 500; transition: color .2s;
+    }
+    .bottom-nav-item i { font-size: 20px; }
+    .bottom-nav-item:hover { color: var(--coral); }
+    .bottom-nav-item.active { color: var(--coral); font-weight: 700; }
+
+    /* ═══════════════════════════
+       FOOTER (igual index)
+    ═══════════════════════════ */
+    footer {
+      background: var(--footer-bg); color: rgba(255,255,255,.65);
+      padding: 40px 20px 28px;
+    }
+    .footer-logo-block { margin-bottom: 32px; }
+    .footer-logo { font-size: 20px; font-weight: 900; letter-spacing: 3px; color: var(--white); margin-bottom: 6px; }
+    .footer-tagline { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.5; }
+    .footer-links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 10px; margin-bottom: 32px; }
+    .footer-col-title { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--white); margin-bottom: 12px; }
+    .footer-col a { display: block; font-size: 11px; color: rgba(255,255,255,.45); text-decoration: none; padding: 3px 0; line-height: 1.6; transition: color .2s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-social-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 14px; }
+    .footer-social-icons { display: flex; gap: 12px; margin-bottom: 28px; }
+    .footer-social-icons a { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.6); font-size: 16px; text-decoration: none; transition: border-color .2s, color .2s; }
+    .footer-social-icons a:hover { border-color: var(--coral); color: var(--coral); }
+    .footer-divider { height: 1px; background: rgba(255,255,255,.1); margin-bottom: 20px; }
+    .footer-legal { display: flex; gap: 16px; margin-bottom: 10px; }
+    .footer-legal a { font-size: 11px; color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s; }
+    .footer-legal a:hover { color: var(--white); }
+    .footer-copyright { font-size: 11px; color: rgba(255,255,255,.28); }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════
+       HEADER
+  ═══════════════════════ -->
+  <header class="header">
+    <div class="header-logo">LOGO</div>
+    <button class="hamburger-btn" id="menuBtn" aria-label="Abrir menú">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </header>
+
+  <!-- ═══════════════════════
+       NAV OVERLAY
+  ═══════════════════════ -->
+  <div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="Menú">
+    <nav class="nav-drawer">
+      <button class="nav-close" id="closeBtn" aria-label="Cerrar menú">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <a href="index.html"      class="nav-link">Inicio</a>
+      <a href="directorio.html" class="nav-link">Directorio pet-friendly</a>
+      <a href="adopcion.html"   class="nav-link">Adopción</a>
+      <a href="#"               class="nav-link">Últimas noticias</a>
+      <a href="#"               class="nav-link">Eventos</a>
+      <a href="#"               class="nav-link">Comunidad</a>
+      <a href="#"               class="nav-link">Sobre nosotros</a>
+      <a href="#"               class="nav-link">Contacto</a>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════
+       PAGE HEADER
+  ═══════════════════════ -->
+  <div class="page-header">
+    <button class="page-header-back" onclick="history.back()" aria-label="Volver">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <span class="page-header-title">Adopción</span>
+    <div class="page-header-spacer"></div>
+  </div>
+
+  <!-- ═══════════════════════
+       CONTENIDO
+  ═══════════════════════ -->
+  <div class="adop-content">
+
+    <!-- Buscador -->
+    <div class="search-wrap">
+      <input class="search-input" type="search" placeholder="Busca por nombre o raza…">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters-row" id="filtersRow">
+
+      <!-- Filtro Edad -->
+      <div style="position:relative">
+        <button class="filter-btn" id="btnFiltroEdad" aria-haspopup="listbox">
+          <i class="fa-solid fa-cake-candles"></i>
+          Edad
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="filter-dropdown" id="dropEdad" role="listbox">
+          <label class="filter-option">
+            <input type="radio" name="edad" value="cachorro">
+            <span class="filter-option-label">🐶 Cachorro (0–1 año)</span>
+          </label>
+          <label class="filter-option">
+            <input type="radio" name="edad" value="adulto" checked>
+            <span class="filter-option-label">🐕 Adulto (1–7 años)</span>
+          </label>
+          <label class="filter-option">
+            <input type="radio" name="edad" value="senior">
+            <span class="filter-option-label">🦮 Senior (+7 años)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Filtro Comuna -->
+      <div style="position:relative">
+        <button class="filter-btn" id="btnFiltroComuna" aria-haspopup="listbox">
+          <i class="fa-solid fa-location-dot"></i>
+          Comuna/zona
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="filter-dropdown" id="dropComuna" role="listbox">
+          <label class="filter-option">
+            <input type="checkbox" value="providencia">
+            <span class="filter-option-label">Providencia</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" value="las-condes">
+            <span class="filter-option-label">Las Condes</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" value="nunoa">
+            <span class="filter-option-label">Ñuñoa</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" value="santiago">
+            <span class="filter-option-label">Santiago Centro</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" value="maipu">
+            <span class="filter-option-label">Maipú</span>
+          </label>
+        </div>
+      </div>
+
+    </div><!-- /filters-row -->
+
+    <!-- ═══════════════════════
+         PERFIL: COCO
+    ═══════════════════════ -->
+    <div class="pet-profile">
+
+      <!-- Galería de fotos -->
+      <div class="gallery-header">
+        <span class="gallery-title">Fotos de Coco</span>
+        <button class="gallery-see-all"><i class="fa-solid fa-images"></i> Ver todas</button>
+      </div>
+
+      <div class="gallery-scroll">
+        <div class="gallery-thumb"><i class="fa-regular fa-image"></i></div>
+        <div class="gallery-thumb"><i class="fa-regular fa-image"></i></div>
+        <div class="gallery-thumb"><i class="fa-regular fa-image"></i></div>
+        <div class="gallery-thumb"><i class="fa-regular fa-image"></i></div>
+        <div class="gallery-thumb"><i class="fa-regular fa-image"></i></div>
+        <!-- Última thumb: ver todas -->
+        <div class="gallery-thumb">
+          <i class="fa-regular fa-image"></i>
+          <div class="gallery-thumb-overlay">
+            <i class="fa-solid fa-plus"></i>
+            <span>Ver todas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nombre y disponibilidad -->
+      <div class="pet-name-row">
+        <h1 class="pet-name">Coco</h1>
+        <span class="pet-available">Disponible</span>
+      </div>
+
+      <!-- Tags de características -->
+      <div class="pet-tags">
+        <span class="pet-tag"><i class="fa-solid fa-calendar"></i> 1 año</span>
+        <span class="pet-tag"><i class="fa-solid fa-ruler"></i> Mediano</span>
+        <span class="pet-tag"><i class="fa-solid fa-dog"></i> Quiltro</span>
+        <span class="pet-tag"><i class="fa-solid fa-circle" style="color:#1a1a1a;font-size:9px"></i> Negro azabache</span>
+        <span class="pet-tag"><i class="fa-solid fa-mars"></i> Macho</span>
+      </div>
+
+      <!-- Descripción -->
+      <div class="pet-desc">
+        <p>Es un perro <strong>sumamente juguetón y sociable</strong>. Le encantan los niños, tiene un carácter equilibrado: es un atleta en el exterior y un compañero afectuoso en casa.</p>
+        <p>🌊 <strong>Fanático del mar:</strong> Su actividad favorita es visitar la playa, correr por la arena y jugar con las olas.</p>
+        <p>⚡ <strong>Nivel de energía medio-alto:</strong> ideal para familias que disfrutan de paseos diarios y juegos al aire libre.</p>
+        <p>Busca una familia activa que lo integre en sus aventuras. Es el compañero perfecto para hogares con niños o para personas que busquen un perro leal, inteligente y con gran disposición al juego.</p>
+      </div>
+
+      <!-- Fundación -->
+      <div class="pet-foundation">
+        <div class="pet-foundation-icon">
+          <i class="fa-solid fa-paw"></i>
+        </div>
+        <div>
+          <div class="pet-foundation-text">Publicado por</div>
+          <div class="pet-foundation-name">Fundación Julieta</div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <button class="btn-adoptar">
+        <i class="fa-solid fa-heart"></i>
+        Lo quiero adoptar
+      </button>
+
+    </div><!-- /pet-profile -->
+
+    <!-- ═══════════════════════
+         MASCOTAS DISPONIBLES
+    ═══════════════════════ -->
+    <div class="section-block">
+      <h2 class="section-block-title">Mascotas disponibles</h2>
+
+      <div class="pets-grid">
+
+        <!-- Luna -->
+        <div class="pet-card">
+          <button class="pet-card-fav" aria-label="Guardar Luna en favoritos">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+          <div class="pet-card-img"><i class="fa-solid fa-dog"></i></div>
+          <div class="pet-card-body">
+            <div class="pet-card-name">Luna</div>
+            <div class="pet-card-info">
+              <span class="pet-card-badge age">4 meses</span>
+              <span class="pet-card-badge size">Mediano</span>
+            </div>
+            <div class="pet-card-location">
+              <i class="fa-solid fa-location-dot"></i> Las Condes
+            </div>
+            <div class="pet-card-org">Fdción. Huéspeda Animal</div>
+          </div>
+        </div>
+
+        <!-- Max -->
+        <div class="pet-card">
+          <button class="pet-card-fav" aria-label="Guardar Max en favoritos">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+          <div class="pet-card-img"><i class="fa-solid fa-dog"></i></div>
+          <div class="pet-card-body">
+            <div class="pet-card-name">Max</div>
+            <div class="pet-card-info">
+              <span class="pet-card-badge age">2 años</span>
+              <span class="pet-card-badge size">Grande</span>
+            </div>
+            <div class="pet-card-location">
+              <i class="fa-solid fa-location-dot"></i> Providencia
+            </div>
+            <div class="pet-card-org">Fundación Julieta</div>
+          </div>
+        </div>
+
+        <!-- Mia -->
+        <div class="pet-card">
+          <button class="pet-card-fav" aria-label="Guardar Mia en favoritos">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+          <div class="pet-card-img"><i class="fa-solid fa-cat"></i></div>
+          <div class="pet-card-body">
+            <div class="pet-card-name">Mia</div>
+            <div class="pet-card-info">
+              <span class="pet-card-badge age">8 meses</span>
+              <span class="pet-card-badge size">Pequeño</span>
+            </div>
+            <div class="pet-card-location">
+              <i class="fa-solid fa-location-dot"></i> Ñuñoa
+            </div>
+            <div class="pet-card-org">Refugio El Canelo</div>
+          </div>
+        </div>
+
+        <!-- Rocky -->
+        <div class="pet-card">
+          <button class="pet-card-fav" aria-label="Guardar Rocky en favoritos">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+          <div class="pet-card-img"><i class="fa-solid fa-dog"></i></div>
+          <div class="pet-card-body">
+            <div class="pet-card-name">Rocky</div>
+            <div class="pet-card-info">
+              <span class="pet-card-badge age">3 años</span>
+              <span class="pet-card-badge size">Grande</span>
+            </div>
+            <div class="pet-card-location">
+              <i class="fa-solid fa-location-dot"></i> Maipú
+            </div>
+            <div class="pet-card-org">Adopta un Amigo</div>
+          </div>
+        </div>
+
+        <!-- Bella -->
+        <div class="pet-card">
+          <button class="pet-card-fav" aria-label="Guardar Bella en favoritos">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+          <div class="pet-card-img"><i class="fa-solid fa-cat"></i></div>
+          <div class="pet-card-body">
+            <div class="pet-card-name">Bella</div>
+            <div class="pet-card-info">
+              <span class="pet-card-badge age">1 año</span>
+              <span class="pet-card-badge size">Pequeño</span>
+            </div>
+            <div class="pet-card-location">
+              <i class="fa-solid fa-location-dot"></i> Las Condes
+            </div>
+            <div class="pet-card-org">Fdción. Huéspeda Animal</div>
+          </div>
+        </div>
+
+        <!-- Tobi -->
+        <div class="pet-card">
+          <button class="pet-card-fav" aria-label="Guardar Tobi en favoritos">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+          <div class="pet-card-img"><i class="fa-solid fa-dog"></i></div>
+          <div class="pet-card-body">
+            <div class="pet-card-name">Tobi</div>
+            <div class="pet-card-info">
+              <span class="pet-card-badge age">5 años</span>
+              <span class="pet-card-badge size">Mediano</span>
+            </div>
+            <div class="pet-card-location">
+              <i class="fa-solid fa-location-dot"></i> Santiago
+            </div>
+            <div class="pet-card-org">Fundación Julieta</div>
+          </div>
+        </div>
+
+      </div><!-- /pets-grid -->
+    </div>
+
+    <!-- ═══════════════════════
+         ORGANIZACIONES
+    ═══════════════════════ -->
+    <div class="section-block">
+      <h2 class="section-block-title">Organizaciones</h2>
+
+      <div class="orgs-scroll">
+
+        <div class="org-card">
+          <div class="org-logo" style="background: linear-gradient(135deg,#FF5A45,#FF8A70)">
+            <i class="fa-solid fa-paw"></i>
+          </div>
+          <div class="org-name">Fundación Julieta</div>
+          <div class="org-count"><strong>14</strong> mascotas</div>
+        </div>
+
+        <div class="org-card">
+          <div class="org-logo" style="background: linear-gradient(135deg,#059669,#34D399)">
+            <i class="fa-solid fa-dog"></i>
+          </div>
+          <div class="org-name">Huéspeda Animal</div>
+          <div class="org-count"><strong>22</strong> mascotas</div>
+        </div>
+
+        <div class="org-card">
+          <div class="org-logo" style="background: linear-gradient(135deg,#7C3AED,#A78BFA)">
+            <i class="fa-solid fa-cat"></i>
+          </div>
+          <div class="org-name">Refugio El Canelo</div>
+          <div class="org-count"><strong>9</strong> mascotas</div>
+        </div>
+
+        <div class="org-card">
+          <div class="org-logo" style="background: linear-gradient(135deg,#D97706,#FCD34D)">
+            <i class="fa-solid fa-heart"></i>
+          </div>
+          <div class="org-name">Adopta un Amigo</div>
+          <div class="org-count"><strong>17</strong> mascotas</div>
+        </div>
+
+        <div class="org-card">
+          <div class="org-logo" style="background: linear-gradient(135deg,#0EA5E9,#7DD3FC)">
+            <i class="fa-solid fa-house-chimney-medical"></i>
+          </div>
+          <div class="org-name">Red de Rescate Santiago</div>
+          <div class="org-count"><strong>31</strong> mascotas</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /adop-content -->
+
+  <!-- ═══════════════════════
+       BOTTOM NAV
+  ═══════════════════════ -->
+  <nav class="bottom-nav" aria-label="Navegación principal">
+    <a href="index.html"      class="bottom-nav-item">
+      <i class="fa-solid fa-house"></i>Inicio
+    </a>
+    <a href="directorio.html" class="bottom-nav-item">
+      <i class="fa-solid fa-location-dot"></i>Directorio
+    </a>
+    <a href="adopcion.html"   class="bottom-nav-item active">
+      <i class="fa-solid fa-paw"></i>Adopción
+    </a>
+    <a href="#"               class="bottom-nav-item">
+      <i class="fa-regular fa-newspaper"></i>Noticias
+    </a>
+  </nav>
+
+  <!-- ═══════════════════════
+       FOOTER
+  ═══════════════════════ -->
+  <footer>
+    <div class="footer-logo-block">
+      <div class="footer-logo">LOGO</div>
+      <p class="footer-tagline">El hub para mascotas y sus familias en Chile.</p>
+    </div>
+    <div class="footer-links-grid">
+      <div class="footer-col">
+        <p class="footer-col-title">Explora</p>
+        <a href="#">Directorio pet-friendly</a>
+        <a href="#">Adopción</a>
+        <a href="#">Últimas noticias</a>
+        <a href="#">Eventos</a>
+        <a href="#">Comunidad</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Hub</p>
+        <a href="#">Sobre nosotros</a>
+        <a href="#">Para profesionales</a>
+        <a href="#">Aliados y refugios</a>
+        <a href="#">Trabaja con nosotros</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Ayuda</p>
+        <a href="#">Centro de ayuda</a>
+        <a href="#">Contacto</a>
+        <a href="#">Preguntas frecuentes</a>
+      </div>
+    </div>
+    <p class="footer-social-label">Síguenos</p>
+    <div class="footer-social-icons">
+      <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      <a href="#" aria-label="Threads"><i class="fa-brands fa-threads"></i></a>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-legal">
+      <a href="#">Términos</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Cookies</a>
+    </div>
+    <p class="footer-copyright">© 2026 HUB MASCOTAS · Hecho con 🐾 en Santiago</p>
+  </footer>
+
+  <script>
+    // ——— Nav hamburguesa ———
+    const menuBtn    = document.getElementById('menuBtn');
+    const closeBtn   = document.getElementById('closeBtn');
+    const navOverlay = document.getElementById('navOverlay');
+
+    function openNav()  { navOverlay.classList.add('open');    document.body.style.overflow = 'hidden'; closeBtn.focus(); }
+    function closeNav() { navOverlay.classList.remove('open'); document.body.style.overflow = '';       menuBtn.focus();  }
+
+    menuBtn.addEventListener('click', openNav);
+    closeBtn.addEventListener('click', closeNav);
+    navOverlay.addEventListener('click', e => { if (e.target === navOverlay) closeNav(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && navOverlay.classList.contains('open')) closeNav(); });
+
+    // ——— Filtros dropdown ———
+    function setupFilter(btnId, dropId) {
+      const btn  = document.getElementById(btnId);
+      const drop = document.getElementById(dropId);
+
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = drop.classList.contains('open');
+        // Cierra todos
+        document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('open'));
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('open'));
+        if (!isOpen) {
+          drop.classList.add('open');
+          btn.classList.add('open');
+        }
+      });
+
+      // Marcar botón como selected si hay opción elegida
+      drop.addEventListener('change', () => {
+        const checked = drop.querySelector('input:checked');
+        btn.classList.toggle('selected', !!checked);
+      });
+    }
+
+    setupFilter('btnFiltroEdad',   'dropEdad');
+    setupFilter('btnFiltroComuna', 'dropComuna');
+
+    // Cierra dropdowns al hacer clic fuera
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('open'));
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('open'));
+    });
+
+    // ——— Favoritos (corazones) ———
+    document.querySelectorAll('.pet-card-fav').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        btn.classList.toggle('active');
+        const icon = btn.querySelector('i');
+        icon.style.transform = 'scale(1.4)';
+        setTimeout(() => icon.style.transform = '', 250);
+      });
+    });
+  </script>
+</body>
+</html>
