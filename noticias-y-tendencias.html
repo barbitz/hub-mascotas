@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noticias & Tendencias · PETS HUB</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral:       #FF5A45;
+      --coral-dark:  #E04330;
+      --dark:        #1C1C1E;
+      --footer-bg:   #111827;
+      --gray:        #6B7280;
+      --gray-light:  #F3F4F6;
+      --gray-border: #E5E7EB;
+      --white:       #FFFFFF;
+      --gold:        #F59E0B;
+      --r:           12px;
+      --r-sm:        8px;
+      --r-pill:      100px;
+    }
+
+    html { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: var(--white); color: var(--dark); max-width: 430px; margin: 0 auto; overflow-x: hidden; }
+
+    /* ═══ HEADER ═══ */
+    .header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 60px; background: var(--white); border-bottom: 1px solid var(--gray-border); }
+    .header-logo { font-size: 18px; font-weight: 900; letter-spacing: 3px; color: var(--dark); }
+    .hamburger-btn { background: none; border: none; cursor: pointer; padding: 8px; font-size: 22px; color: var(--dark); line-height: 1; }
+
+    /* ═══ NAV ═══ */
+    .nav-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,.45); opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+    .nav-overlay.open { opacity: 1; pointer-events: all; }
+    .nav-drawer { position: absolute; top: 0; right: 0; width: 280px; height: 100%; background: var(--white); padding: 20px; transform: translateX(100%); transition: transform .3s ease; display: flex; flex-direction: column; }
+    .nav-overlay.open .nav-drawer { transform: translateX(0); }
+    .nav-close { align-self: flex-end; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--dark); padding: 6px; margin-bottom: 12px; }
+    .nav-link { display: block; padding: 14px 0; font-size: 16px; font-weight: 500; color: var(--dark); text-decoration: none; border-bottom: 1px solid var(--gray-border); }
+    .nav-link:last-child { border-bottom: none; }
+
+    /* ═══ PAGE HEADER ═══ */
+    .page-header { display: flex; align-items: center; padding: 0 20px; height: 52px; background: var(--white); border-bottom: 1px solid var(--gray-border); }
+    .page-header-back { width: 36px; background: none; border: none; font-size: 18px; color: var(--dark); cursor: pointer; display: flex; align-items: center; flex-shrink: 0; }
+    .page-header-title { flex: 1; text-align: center; font-size: 16px; font-weight: 700; color: var(--dark); }
+    .page-header-spacer { width: 36px; flex-shrink: 0; }
+
+    /* ═══ BUSCADOR ═══ */
+    .search-wrap { padding: 16px 20px; background: var(--white); border-bottom: 1px solid var(--gray-border); }
+    .search-field {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--gray-light); border-radius: var(--r-pill);
+      padding: 0 16px; height: 44px;
+    }
+    .search-field i { color: var(--gray); font-size: 15px; flex-shrink: 0; }
+    .search-field input {
+      flex: 1; background: none; border: none; outline: none;
+      font-size: 14px; color: var(--dark);
+    }
+    .search-field input::placeholder { color: var(--gray); }
+
+    /* ═══ SECCIONES ═══ */
+    .section-block { padding: 28px 20px 0; }
+    .section-block + .section-block { border-top: 1px solid var(--gray-border); margin-top: 32px; }
+    .section-block:last-of-type { padding-bottom: 40px; }
+
+    .section-head { margin-bottom: 18px; }
+    .section-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--coral);
+      margin-bottom: 6px;
+    }
+    .section-eyebrow::before { content: ''; display: block; width: 20px; height: 2px; background: var(--coral); border-radius: 2px; }
+    .section-title { font-size: 22px; font-weight: 900; color: var(--dark); line-height: 1.2; letter-spacing: -.4px; }
+    .section-sub { font-size: 13px; color: var(--gray); margin-top: 4px; line-height: 1.5; }
+
+    /* ═══ FILTROS PILLS ═══ */
+    .filter-row {
+      display: flex; gap: 8px;
+      overflow-x: auto; scrollbar-width: none;
+      padding-bottom: 4px; margin-bottom: 20px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-row::-webkit-scrollbar { display: none; }
+    .filter-pill {
+      flex-shrink: 0;
+      padding: 7px 16px;
+      border-radius: var(--r-pill);
+      border: 1.5px solid var(--gray-border);
+      background: var(--white);
+      color: var(--gray);
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: border-color .2s, background .2s, color .2s;
+      white-space: nowrap;
+    }
+    .filter-pill.active {
+      background: var(--coral); border-color: var(--coral);
+      color: var(--white);
+    }
+    .filter-pill:not(.active):hover { border-color: var(--coral); color: var(--coral); }
+
+    /* ═══ ARTICLE CARD (vertical, full width) ═══ */
+    .article-card {
+      background: var(--white);
+      border: 1px solid var(--gray-border);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+      transition: box-shadow .2s;
+    }
+    .article-card:last-child { margin-bottom: 0; }
+    .article-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.09); }
+
+    .article-img {
+      width: 100%; aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 44px; color: rgba(255,255,255,.35);
+      position: relative; overflow: hidden; cursor: pointer;
+    }
+    .article-cat-badge {
+      position: absolute; top: 12px; left: 12px;
+      padding: 4px 10px; border-radius: var(--r-pill);
+      font-size: 10px; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--white);
+      backdrop-filter: blur(6px);
+    }
+    .badge-local      { background: rgba(255,90,69,.85); }
+    .badge-internacional { background: rgba(99,102,241,.85); }
+    .badge-salud      { background: rgba(16,185,129,.85); }
+    .badge-nutricion  { background: rgba(245,158,11,.85); }
+    .badge-comportamiento { background: rgba(236,72,153,.85); }
+    .badge-lugares    { background: rgba(14,165,233,.85); }
+    .badge-lifestyle  { background: rgba(168,85,247,.85); }
+    .badge-grooming   { background: rgba(249,115,22,.85); }
+    .badge-productos  { background: rgba(20,184,166,.85); }
+    .badge-servicios  { background: rgba(99,102,241,.85); }
+    .badge-legislacion { background: rgba(239,68,68,.85); }
+
+    .article-body { padding: 14px 16px 16px; }
+    .article-meta {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; color: var(--gray);
+      margin-bottom: 7px; flex-wrap: wrap;
+    }
+    .article-meta i { font-size: 10px; color: var(--coral); }
+    .article-meta-dot { width: 3px; height: 3px; background: var(--gray-border); border-radius: 50%; flex-shrink: 0; }
+    .article-title { font-size: 16px; font-weight: 800; color: var(--dark); line-height: 1.35; margin-bottom: 6px; }
+    .article-excerpt { font-size: 13px; color: var(--gray); line-height: 1.6; margin-bottom: 12px; }
+    .article-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--gray-border); padding-top: 11px;
+    }
+    .article-views {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; color: var(--gray); font-weight: 500;
+    }
+    .article-views i { font-size: 13px; }
+    .btn-read-more {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 700; color: var(--coral);
+      background: none; border: none; cursor: pointer;
+      text-decoration: none; transition: gap .2s;
+    }
+    .btn-read-more:hover { gap: 8px; }
+
+    /* ═══ GUIDE CARD (destacada) ═══ */
+    .guide-card {
+      background: var(--white);
+      border: 1px solid var(--gray-border);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+      transition: box-shadow .2s;
+    }
+    .guide-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.09); }
+
+    /* Card destacada para guías (featured) */
+    .guide-card.featured {
+      border-color: var(--coral);
+      box-shadow: 0 4px 16px rgba(255,90,69,.12);
+    }
+    .guide-img {
+      width: 100%; aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 44px; color: rgba(255,255,255,.35);
+      position: relative; overflow: hidden;
+    }
+    .guide-featured-badge {
+      position: absolute; top: 12px; left: 12px;
+      display: flex; align-items: center; gap: 5px;
+      background: var(--coral); color: var(--white);
+      font-size: 10px; font-weight: 800; letter-spacing: 1px;
+      padding: 4px 10px; border-radius: var(--r-pill);
+      text-transform: uppercase;
+    }
+    .guide-num-list {
+      position: absolute; bottom: 0; right: 0;
+      background: rgba(0,0,0,.6); backdrop-filter: blur(6px);
+      padding: 8px 14px;
+      display: flex; align-items: center; gap: 6px;
+      color: var(--white); font-size: 13px; font-weight: 700;
+    }
+    .guide-body { padding: 14px 16px 16px; }
+    .guide-list-items {
+      display: flex; flex-direction: column; gap: 6px;
+      margin-bottom: 14px;
+    }
+    .guide-list-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--dark);
+    }
+    .guide-list-num {
+      flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+      background: var(--coral); color: var(--white);
+      font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ═══ TENDENCIA CARD (horizontal) ═══ */
+    .trend-card {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--gray-border);
+    }
+    .trend-card:last-child { border-bottom: none; }
+    .trend-img {
+      flex-shrink: 0; width: 84px; height: 84px;
+      border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: rgba(255,255,255,.35);
+      overflow: hidden; position: relative;
+    }
+    .trend-body { flex: 1; min-width: 0; }
+    .trend-cat {
+      font-size: 10px; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--coral);
+      margin-bottom: 4px;
+    }
+    .trend-title { font-size: 14px; font-weight: 800; color: var(--dark); line-height: 1.35; margin-bottom: 5px; }
+    .trend-excerpt { font-size: 12px; color: var(--gray); line-height: 1.55; margin-bottom: 8px; }
+    .trend-footer { display: flex; align-items: center; justify-content: space-between; }
+    .trend-views { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--gray); }
+    .trend-views i { font-size: 12px; }
+    .trend-date { font-size: 11px; color: var(--gray); }
+
+    /* ═══ BOTTOM NAV ═══ */
+    .bottom-nav { display: flex; border-top: 1px solid var(--gray-border); background: var(--white); }
+    .bottom-nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; padding: 12px 4px; text-decoration: none; color: var(--gray); font-size: 10px; font-weight: 500; transition: color .2s; }
+    .bottom-nav-item i { font-size: 20px; }
+    .bottom-nav-item:hover, .bottom-nav-item.active { color: var(--coral); }
+    .bottom-nav-item.active { font-weight: 700; }
+
+    /* ═══ FOOTER ═══ */
+    footer { background: var(--footer-bg); color: rgba(255,255,255,.65); padding: 40px 20px 28px; }
+    .footer-logo-block { margin-bottom: 32px; }
+    .footer-logo { font-size: 20px; font-weight: 900; letter-spacing: 3px; color: var(--white); margin-bottom: 6px; }
+    .footer-tagline { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.5; }
+    .footer-links-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px 10px; margin-bottom: 32px; }
+    .footer-col-title { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--white); margin-bottom: 12px; }
+    .footer-col a { display: block; font-size: 11px; color: rgba(255,255,255,.45); text-decoration: none; padding: 3px 0; line-height: 1.6; transition: color .2s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-social-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 14px; }
+    .footer-social-icons { display: flex; gap: 12px; margin-bottom: 28px; }
+    .footer-social-icons a { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.6); font-size: 16px; text-decoration: none; transition: border-color .2s, color .2s; }
+    .footer-social-icons a:hover { border-color: var(--coral); color: var(--coral); }
+    .footer-divider { height: 1px; background: rgba(255,255,255,.1); margin-bottom: 20px; }
+    .footer-legal { display: flex; gap: 16px; margin-bottom: 10px; }
+    .footer-legal a { font-size: 11px; color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s; }
+    .footer-legal a:hover { color: var(--white); }
+    .footer-copyright { font-size: 11px; color: rgba(255,255,255,.28); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<header class="header">
+  <div class="header-logo">LOGO</div>
+  <button class="hamburger-btn" id="menuBtn" aria-label="Abrir menú">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</header>
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true">
+  <nav class="nav-drawer">
+    <button class="nav-close" id="closeBtn"><i class="fa-solid fa-xmark"></i></button>
+    <a href="index.html"                   class="nav-link">Inicio</a>
+    <a href="directorio.html"              class="nav-link">Directorio pet-friendly</a>
+    <a href="adopcion.html"                class="nav-link">Adopción</a>
+    <a href="vida-social-pet.html"         class="nav-link">Vida Social Pet</a>
+    <a href="noticias-y-tendencias.html"   class="nav-link">Noticias & Tendencias</a>
+    <a href="#"                            class="nav-link">Eventos</a>
+    <a href="#"                            class="nav-link">Comunidad</a>
+    <a href="#"                            class="nav-link">Contacto</a>
+  </nav>
+</div>
+
+<!-- ═══════════════════════ PAGE HEADER ═══════════════════════ -->
+<div class="page-header">
+  <button class="page-header-back" onclick="history.back()" aria-label="Volver">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <span class="page-header-title">Noticias &amp; Tendencias</span>
+  <div class="page-header-spacer"></div>
+</div>
+
+<!-- ═══════════════════════ BUSCADOR ═══════════════════════ -->
+<div class="search-wrap">
+  <div class="search-field">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" placeholder="Busca artículos, guías, tendencias…" aria-label="Buscar artículos">
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECCIÓN: NOTICIAS
+════════════════════════════════════════════════════ -->
+<div class="section-block" id="secNoticias">
+  <div class="section-head">
+    <div class="section-eyebrow"><i class="fa-regular fa-newspaper"></i> Actualidad</div>
+    <h2 class="section-title">Noticias</h2>
+    <p class="section-sub">Lo que está pasando en el mundo pet esta semana.</p>
+  </div>
+
+  <div class="filter-row" data-group="noticias">
+    <button class="filter-pill active" data-filter="todos">Todos</button>
+    <button class="filter-pill" data-filter="local">Local</button>
+    <button class="filter-pill" data-filter="internacional">Internacional</button>
+  </div>
+
+  <!-- Card 1 -->
+  <div class="article-card" data-tag="local">
+    <div class="article-img" style="background: linear-gradient(135deg,#0EA5E9,#38BDF8)">
+      <i class="fa-solid fa-city"></i>
+      <span class="article-cat-badge badge-local">Local</span>
+    </div>
+    <div class="article-body">
+      <div class="article-meta">
+        <i class="fa-solid fa-user-pen"></i><span>La Redacción</span>
+        <div class="article-meta-dot"></div>
+        <span>10 abril 2026</span>
+      </div>
+      <h3 class="article-title">Santiago suma 12 nuevos espacios pet-friendly en la vía pública</h3>
+      <p class="article-excerpt">La Municipalidad de Santiago anunció la habilitación de bebederos, zonas de descanso con sombra y dispensadores de bolsas biodegradables en 12 puntos del centro y Barrio Italia.</p>
+      <div class="article-footer">
+        <span class="article-views"><i class="fa-regular fa-eye"></i> 3.4k vistas</span>
+        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="article-card" data-tag="internacional">
+    <div class="article-img" style="background: linear-gradient(135deg,#6366F1,#A5B4FC)">
+      <i class="fa-solid fa-globe"></i>
+      <span class="article-cat-badge badge-internacional">Internacional</span>
+    </div>
+    <div class="article-body">
+      <div class="article-meta">
+        <i class="fa-solid fa-user-pen"></i><span>Corresponsal</span>
+        <div class="article-meta-dot"></div>
+        <span>8 abril 2026</span>
+      </div>
+      <h3 class="article-title">Argentina lidera Latinoamérica en legislación de bienestar animal</h3>
+      <p class="article-excerpt">El vecino país aprobó una reforma que prohíbe el abandono animal y obliga a municipios a costear la esterilización masiva. Expertos chilenos piden replicar el modelo.</p>
+      <div class="article-footer">
+        <span class="article-views"><i class="fa-regular fa-eye"></i> 2.1k vistas</span>
+        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="article-card" data-tag="local">
+    <div class="article-img" style="background: linear-gradient(135deg,#10B981,#6EE7B7)">
+      <i class="fa-solid fa-tree"></i>
+      <span class="article-cat-badge badge-local">Local</span>
+    </div>
+    <div class="article-body">
+      <div class="article-meta">
+        <i class="fa-solid fa-user-pen"></i><span>Carla Fuentes</span>
+        <div class="article-meta-dot"></div>
+        <span>5 abril 2026</span>
+      </div>
+      <h3 class="article-title">Vitacura inaugura el primer parque canino techado de Chile</h3>
+      <p class="article-excerpt">Con 1.200 m² cubiertos, zona de agilidad y área de socialización separada por tamaños, el recinto del Parque Bicentenario abre sus puertas de manera gratuita todos los días del año.</p>
+      <div class="article-footer">
+        <span class="article-views"><i class="fa-regular fa-eye"></i> 5.8k vistas</span>
+        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /noticias -->
+
+<!-- ═══════════════════════════════════════════════════
+     SECCIÓN: EDUCACIÓN
+════════════════════════════════════════════════════ -->
+<div class="section-block" id="secEducacion">
+  <div class="section-head">
+    <div class="section-eyebrow"><i class="fa-solid fa-graduation-cap"></i> Aprende</div>
+    <h2 class="section-title">Educación</h2>
+    <p class="section-sub">Salud, nutrición y comportamiento para cuidar mejor a tu mascota.</p>
+  </div>
+
+  <div class="filter-row" data-group="educacion">
+    <button class="filter-pill active" data-filter="todos">Todos</button>
+    <button class="filter-pill" data-filter="salud">Salud</button>
+    <button class="filter-pill" data-filter="nutricion">Nutrición</button>
+    <button class="filter-pill" data-filter="comportamiento">Comportamiento</button>
+  </div>
+
+  <!-- Card 1 -->
+  <div class="article-card" data-tag="nutricion">
+    <div class="article-img" style="background: linear-gradient(135deg,#F59E0B,#FCD34D)">
+      <i class="fa-solid fa-bowl-food"></i>
+      <span class="article-cat-badge badge-nutricion">Nutrición</span>
+    </div>
+    <div class="article-body">
+      <div class="article-meta">
+        <i class="fa-solid fa-user-pen"></i><span>Dra. Renata Lagos</span>
+        <div class="article-meta-dot"></div>
+        <span>9 abril 2026</span>
+      </div>
+      <h3 class="article-title">¿Cuántas veces debe comer tu perro según su edad?</h3>
+      <p class="article-excerpt">La frecuencia ideal varía entre cachorros, adultos y seniors. Una veterinaria explica los horarios recomendados y qué pasa si sobrealimentas a tu compañero.</p>
+      <div class="article-footer">
+        <span class="article-views"><i class="fa-regular fa-eye"></i> 7.2k vistas</span>
+        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="article-card" data-tag="comportamiento">
+    <div class="article-img" style="background: linear-gradient(135deg,#EC4899,#F9A8D4)">
+      <i class="fa-solid fa-cat"></i>
+      <span class="article-cat-badge badge-comportamiento">Comportamiento</span>
+    </div>
+    <div class="article-body">
+      <div class="article-meta">
+        <i class="fa-solid fa-user-pen"></i><span>Ps. Animal Tomás Bravo</span>
+        <div class="article-meta-dot"></div>
+        <span>6 abril 2026</span>
+      </div>
+      <h3 class="article-title">Señales de ansiedad en gatos y cómo tratarlas en casa</h3>
+      <p class="article-excerpt">El esconderse, sobrecepillarse o maullar de noche puede ser más que un mal hábito. Un especialista en conducta felina te explica cómo identificar y manejar la ansiedad.</p>
+      <div class="article-footer">
+        <span class="article-views"><i class="fa-regular fa-eye"></i> 4.9k vistas</span>
+        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="article-card" data-tag="salud">
+    <div class="article-img" style="background: linear-gradient(135deg,#10B981,#34D399)">
+      <i class="fa-solid fa-syringe"></i>
+      <span class="article-cat-badge badge-salud">Salud</span>
+    </div>
+    <div class="article-body">
+      <div class="article-meta">
+        <i class="fa-solid fa-user-pen"></i><span>Dr. Andrés Soto</span>
+        <div class="article-meta-dot"></div>
+        <span>2 abril 2026</span>
+      </div>
+      <h3 class="article-title">Vacunas obligatorias 2026: guía completa para dueños responsables</h3>
+      <p class="article-excerpt">El SAG actualizó el calendario de vacunación antirrábica y el Colegio Médico Veterinario recomienda nuevas vacunas contra enfermedades respiratorias. Todo lo que necesitas saber.</p>
+      <div class="article-footer">
+        <span class="article-views"><i class="fa-regular fa-eye"></i> 9.1k vistas</span>
+        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /educacion -->
+
+<!-- ═══════════════════════════════════════════════════
+     SECCIÓN: GUÍAS PRÁCTICAS
+════════════════════════════════════════════════════ -->
+<div class="section-block" id="secGuias">
+  <div class="section-head">
+    <div class="section-eyebrow"><i class="fa-solid fa-map"></i> Recursos</div>
+    <h2 class="section-title">Guías prácticas</h2>
+    <p class="section-sub">Todo lo que necesitas saber para vivir bien con tu mascota en la ciudad.</p>
+  </div>
+
+  <div class="filter-row" data-group="guias">
+    <button class="filter-pill active" data-filter="todos">Todos</button>
+    <button class="filter-pill" data-filter="lugares">Lugares</button>
+    <button class="filter-pill" data-filter="lifestyle">Lifestyle</button>
+    <button class="filter-pill" data-filter="grooming">Grooming para tu mascota</button>
+  </div>
+
+  <!-- Card destacada: Las 10 mejores plazas -->
+  <div class="guide-card featured" data-tag="lugares">
+    <div class="guide-img" style="background: linear-gradient(135deg,#0EA5E9,#38BDF8)">
+      <i class="fa-solid fa-map-location-dot"></i>
+      <div class="guide-featured-badge"><i class="fa-solid fa-star"></i> Guía destacada</div>
+      <div class="guide-num-list"><i class="fa-solid fa-list-ol"></i> Top 10</div>
+    </div>
+    <div class="guide-body">
+      <div class="article-meta">
+        <i class="fa-solid fa-user-pen"></i><span>Equipo PETS HUB</span>
+        <div class="article-meta-dot"></div>
+        <span>Abril 2026</span>
+      </div>
+      <h3 class="article-title">Las 10 mejores plazas para perros en Santiago</h3>
+      <p class="article-excerpt">Evaluamos más de 30 espacios caninos considerando tamaño, sombra, agua, seguridad y transporte cercano. Estas son las 10 que no puedes dejar de visitar.</p>
+      <div class="guide-list-items">
+        <div class="guide-list-item"><div class="guide-list-num">1</div>Parque Bicentenario — Vitacura</div>
+        <div class="guide-list-item"><div class="guide-list-num">2</div>Parque Padre Hurtado — Providencia</div>
+        <div class="guide-list-item"><div class="guide-list-num">3</div>Parque Los Reyes — Santiago</div>
+        <div class="guide-list-item"><div class="guide-list-num">4</div>Plaza Ñuñoa — Ñuñoa</div>
+        <div class="guide-list-item"><div class="guide-list-num">5</div>Parque Araucano — Las Condes</div>
+      </div>
+      <div class="article-footer">
+        <span class="article-views"><i class="fa-regular fa-eye"></i> 18.3k vistas</span>
+        <a href="#" class="btn-read-more">Ver guía completa <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="article-card" data-tag="grooming">
+    <div class="article-img" style="background: linear-gradient(135deg,#F97316,#FED7AA)">
+      <i class="fa-solid fa-scissors"></i>
+      <span class="article-cat-badge badge-grooming">Grooming</span>
+    </div>
+    <div class="article-body">
+      <div class="article-meta">
+        <i class="fa-solid fa-user-pen"></i><span>Valentina Rojas</span>
+        <div class="article-meta-dot"></div>
+        <span>7 abril 2026</span>
+      </div>
+      <h3 class="article-title">Cómo elegir el mejor groomer para tu mascota (sin arrepentirte)</h3>
+      <p class="article-excerpt">Certificaciones, higiene del local, trato con los animales y precio justo. Todo lo que debes preguntar antes de dejar a tu mascota en manos de un profesional.</p>
+      <div class="article-footer">
+        <span class="article-views"><i class="fa-regular fa-eye"></i> 6.4k vistas</span>
+        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="article-card" data-tag="lifestyle">
+    <div class="article-img" style="background: linear-gradient(135deg,#A855F7,#E9D5FF)">
+      <i class="fa-solid fa-mug-hot"></i>
+      <span class="article-cat-badge badge-lifestyle">Lifestyle</span>
+    </div>
+    <div class="article-body">
+      <div class="article-meta">
+        <i class="fa-solid fa-user-pen"></i><span>Matías Vera</span>
+        <div class="article-meta-dot"></div>
+        <span>3 abril 2026</span>
+      </div>
+      <h3 class="article-title">Guía de cafés pet-friendly en Santiago: 15 locales que amarás</h3>
+      <p class="article-excerpt">Desde Barrio Italia hasta Las Condes, estos son los espacios donde el café es bueno, la onda es mejor y tu mascota siempre es bienvenida.</p>
+      <div class="article-footer">
+        <span class="article-views"><i class="fa-regular fa-eye"></i> 11.7k vistas</span>
+        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /guias -->
+
+<!-- ═══════════════════════════════════════════════════
+     SECCIÓN: TENDENCIAS
+════════════════════════════════════════════════════ -->
+<div class="section-block" id="secTendencias" style="padding-bottom: 40px;">
+  <div class="section-head">
+    <div class="section-eyebrow"><i class="fa-solid fa-arrow-trend-up"></i> Lo que viene</div>
+    <h2 class="section-title">Tendencias</h2>
+    <p class="section-sub">Productos, servicios y cambios legales que van a marcar el año.</p>
+  </div>
+
+  <div class="filter-row" data-group="tendencias">
+    <button class="filter-pill active" data-filter="todos">Todos</button>
+    <button class="filter-pill" data-filter="productos">Nuevos productos</button>
+    <button class="filter-pill" data-filter="servicios">Servicios</button>
+    <button class="filter-pill" data-filter="legislacion">Legislación</button>
+  </div>
+
+  <!-- Trend 1 -->
+  <div class="trend-card" data-tag="productos">
+    <div class="trend-img" style="background: linear-gradient(135deg,#14B8A6,#5EEAD4)">
+      <i class="fa-solid fa-box-open"></i>
+    </div>
+    <div class="trend-body">
+      <div class="trend-cat">Nuevos productos</div>
+      <div class="trend-title">Los alimentos freeze-dried están revolucionando la nutrición canina</div>
+      <p class="trend-excerpt">La tendencia que llegó de EE.UU. ya tiene representantes locales. ¿Vale la pena el precio?</p>
+      <div class="trend-footer">
+        <span class="trend-views"><i class="fa-regular fa-eye"></i> 4.2k vistas</span>
+        <span class="trend-date">11 abr 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trend 2 -->
+  <div class="trend-card" data-tag="servicios">
+    <div class="trend-img" style="background: linear-gradient(135deg,#6366F1,#A5B4FC)">
+      <i class="fa-solid fa-stethoscope"></i>
+    </div>
+    <div class="trend-body">
+      <div class="trend-cat">Servicios</div>
+      <div class="trend-title">Consultas veterinarias a domicilio crecen 300% en Santiago</div>
+      <p class="trend-excerpt">El estrés del traslado ya no es excusa para no ir al vet. Los servicios online y a domicilio llegaron para quedarse.</p>
+      <div class="trend-footer">
+        <span class="trend-views"><i class="fa-regular fa-eye"></i> 6.8k vistas</span>
+        <span class="trend-date">9 abr 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trend 3 -->
+  <div class="trend-card" data-tag="legislacion">
+    <div class="trend-img" style="background: linear-gradient(135deg,#EF4444,#FCA5A5)">
+      <i class="fa-solid fa-scale-balanced"></i>
+    </div>
+    <div class="trend-body">
+      <div class="trend-cat">Legislación</div>
+      <div class="trend-title">Nueva ley de bienestar animal: lo que cambia en Chile en 2026</div>
+      <p class="trend-excerpt">Multas más altas, registro obligatorio de mascotas y nuevas responsabilidades para criadores. Conoce el resumen.</p>
+      <div class="trend-footer">
+        <span class="trend-views"><i class="fa-regular fa-eye"></i> 14.5k vistas</span>
+        <span class="trend-date">7 abr 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trend 4 -->
+  <div class="trend-card" data-tag="servicios">
+    <div class="trend-img" style="background: linear-gradient(135deg,#F59E0B,#FCD34D)">
+      <i class="fa-solid fa-mobile-screen"></i>
+    </div>
+    <div class="trend-body">
+      <div class="trend-cat">Servicios</div>
+      <div class="trend-title">Apps de seguimiento GPS para mascotas: comparativa 2026</div>
+      <p class="trend-excerpt">Probamos los 5 collares inteligentes con GPS disponibles en Chile. Batería, precisión y precio: la guía definitiva.</p>
+      <div class="trend-footer">
+        <span class="trend-views"><i class="fa-regular fa-eye"></i> 8.9k vistas</span>
+        <span class="trend-date">4 abr 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trend 5 -->
+  <div class="trend-card" data-tag="productos">
+    <div class="trend-img" style="background: linear-gradient(135deg,#BE185D,#F9A8D4)">
+      <i class="fa-solid fa-shirt"></i>
+    </div>
+    <div class="trend-body">
+      <div class="trend-cat">Nuevos productos</div>
+      <div class="trend-title">Ropa y accesorios pet: el mercado que superó los $10M en Chile</div>
+      <p class="trend-excerpt">Desde impermeables hasta pijamas térmicos, el segmento de moda pet creció un 45% en el último año según datos de la CCS.</p>
+      <div class="trend-footer">
+        <span class="trend-views"><i class="fa-regular fa-eye"></i> 3.1k vistas</span>
+        <span class="trend-date">1 abr 2026</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tendencias -->
+
+<!-- ═══════════════════════ BOTTOM NAV ═══════════════════════ -->
+<nav class="bottom-nav" aria-label="Navegación principal">
+  <a href="index.html"                 class="bottom-nav-item"><i class="fa-solid fa-house"></i>Inicio</a>
+  <a href="directorio.html"            class="bottom-nav-item"><i class="fa-solid fa-location-dot"></i>Directorio</a>
+  <a href="adopcion.html"              class="bottom-nav-item"><i class="fa-solid fa-paw"></i>Adopción</a>
+  <a href="noticias-y-tendencias.html" class="bottom-nav-item active"><i class="fa-regular fa-newspaper"></i>Noticias</a>
+</nav>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer>
+  <div class="footer-logo-block">
+    <div class="footer-logo">LOGO</div>
+    <p class="footer-tagline">El hub para mascotas y sus familias en Chile.</p>
+  </div>
+  <div class="footer-links-grid">
+    <div class="footer-col">
+      <p class="footer-col-title">Explora</p>
+      <a href="#">Directorio pet-friendly</a>
+      <a href="#">Adopción</a>
+      <a href="#">Últimas noticias</a>
+      <a href="#">Eventos</a>
+      <a href="#">Comunidad</a>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">Hub</p>
+      <a href="#">Sobre nosotros</a>
+      <a href="#">Para profesionales</a>
+      <a href="#">Aliados y refugios</a>
+      <a href="#">Trabaja con nosotros</a>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">Ayuda</p>
+      <a href="#">Centro de ayuda</a>
+      <a href="#">Contacto</a>
+      <a href="#">Preguntas frecuentes</a>
+    </div>
+  </div>
+  <p class="footer-social-label">Síguenos</p>
+  <div class="footer-social-icons">
+    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+    <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+    <a href="#" aria-label="Threads"><i class="fa-brands fa-threads"></i></a>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-legal">
+    <a href="#">Términos</a>
+    <a href="#">Privacidad</a>
+    <a href="#">Cookies</a>
+  </div>
+  <p class="footer-copyright">© 2026 HUB MASCOTAS · Hecho con 🐾 en Santiago</p>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════
+//  FILTROS PILLS
+//  Cada grupo de pills filtra las cards dentro del mismo section-block
+// ═══════════════════════════════════════════════
+document.querySelectorAll('.filter-row').forEach(row => {
+  const section = row.closest('.section-block');
+  const cards   = section.querySelectorAll('[data-tag]');
+
+  row.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      // Activar pill
+      row.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+
+      const filter = pill.dataset.filter;
+
+      cards.forEach(card => {
+        if (filter === 'todos' || card.dataset.tag === filter) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+});
+
+// ═══════════════════════════════════════════════
+//  NAV HAMBURGUESA
+// ═══════════════════════════════════════════════
+const menuBtn    = document.getElementById('menuBtn');
+const closeBtn   = document.getElementById('closeBtn');
+const navOverlay = document.getElementById('navOverlay');
+
+function openNav()  { navOverlay.classList.add('open');    document.body.style.overflow = 'hidden'; closeBtn.focus(); }
+function closeNav() { navOverlay.classList.remove('open'); document.body.style.overflow = '';       menuBtn.focus();  }
+
+menuBtn.addEventListener('click', openNav);
+closeBtn.addEventListener('click', closeNav);
+navOverlay.addEventListener('click', e => { if (e.target === navOverlay) closeNav(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && navOverlay.classList.contains('open')) closeNav(); });
+</script>
+</body>
+</html>
