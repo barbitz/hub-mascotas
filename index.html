@@ -9,13 +9,13 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --coral:        #FF5A45;
-      --coral-dark:   #E04330;
+      --coral:        #cf832b;
+      --coral-dark:   #b86e1f;
       --dark:         #1C1C1E;
-      --footer-bg:    #111827;
+      --footer-bg:    #2a1a08;
       --gray:         #6B7280;
-      --gray-light:   #F3F4F6;
-      --gray-border:  #E5E7EB;
+      --gray-light:   #fef3e2;
+      --gray-border:  #f5d9a8;
       --white:        #FFFFFF;
       --r:            12px;
       --r-sm:         8px;
@@ -220,6 +220,11 @@
     }
 
     /* ——— DESTACADOS ——— */
+    .destacados .section-eyebrow {
+      font-size: 13px;
+      color: #cf832b;
+    }
+
     .destacados-header {
       display: flex;
       align-items: flex-end;
@@ -287,9 +292,9 @@
       border-radius: var(--r-pill);
       margin-bottom: 10px;
     }
-    .tag-articulo  { background: #EEF2FF; color: #4F46E5; }
-    .tag-lugar     { background: #ECFDF5; color: #059669; }
-    .tag-adopcion  { background: #FFF7ED; color: #EA580C; }
+    .tag-articulo  { background: #e8f5e9; color: #6baf76; }
+    .tag-lugar     { background: #fff8e1; color: #fbc119; }
+    .tag-adopcion  { background: #fff0e8; color: #f06a30; }
 
     .card-title {
       font-size: 13px;
@@ -331,7 +336,7 @@
 
     .acceso-icon {
       width: 56px; height: 56px;
-      background: rgba(255,90,69,.1);
+      background: rgba(207,131,43,.12);
       border-radius: var(--r-sm);
       display: flex;
       align-items: center;
@@ -350,7 +355,7 @@
 
     .eventos-banner {
       margin: 0 20px;
-      background: linear-gradient(135deg, #F8FAFC 0%, #EEF2FF 100%);
+      background: linear-gradient(135deg, #fef6e8 0%, #fde8c0 100%);
       border: 1px solid var(--gray-border);
       border-radius: var(--r);
       padding: 24px 20px;
@@ -441,9 +446,9 @@
 
     /* ——— NEWSLETTER ——— */
     .newsletter {
-      background: #FFF8F7;
-      border-top: 1px solid #FFE0DA;
-      border-bottom: 1px solid #FFE0DA;
+      background: #fef6e8;
+      border-top: 1px solid #f5d9a8;
+      border-bottom: 1px solid #f5d9a8;
     }
     .newsletter-inner { padding: 0 24px; text-align: center; }
 
@@ -613,6 +618,7 @@
       <button class="nav-close" id="closeBtn" aria-label="Cerrar menú">
         <i class="fa-solid fa-xmark"></i>
       </button>
+      <a href="index.html"                  class="nav-link">Inicio</a>
       <a href="directorio.html"            class="nav-link">Directorios</a>
       <a href="adopcion.html"              class="nav-link">Adopción</a>
       <a href="vida-social-pet.html"       class="nav-link">Vida social</a>
@@ -697,7 +703,7 @@
             <i class="fa-regular fa-image"></i>
           </div>
           <div class="card-body">
-            <span class="card-tag tag-adopcion">Mascota en adopción</span>
+            <span class="card-tag tag-adopcion">Adopción</span>
             <h3 class="card-title">Luna, labradora de 2 años busca familia amorosa en Ñuñoa</h3>
             <div class="card-meta">
               <i class="fa-solid fa-paw"></i>
