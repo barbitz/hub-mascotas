@@ -46,7 +46,7 @@
       border-bottom: 1px solid var(--gray-border);
     }
     .header-logo {
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 900;
       letter-spacing: 3px;
       color: var(--dark);
@@ -56,7 +56,7 @@
       border: none;
       cursor: pointer;
       padding: 8px;
-      font-size: 22px;
+      font-size: 27px;
       color: var(--dark);
       line-height: 1;
     }
@@ -168,6 +168,7 @@
       position: relative;
       z-index: 2;
       padding: 0 20px 40px;
+      text-align: center;
     }
     .hero-tagline {
       font-size: 27px;
@@ -182,13 +183,12 @@
       line-height: 1.6;
       margin-bottom: 28px;
     }
-    .hero-ctas { display: flex; flex-direction: column; gap: 12px; }
+    .hero-ctas { display: flex; flex-direction: column; gap: 12px; align-items: center; }
 
     .btn-primary {
-      display: block;
-      width: 100%;
+      display: inline-block;
       text-align: center;
-      padding: 15px 24px;
+      padding: 13px 32px;
       background: var(--coral);
       color: var(--white);
       font-size: 15px;
@@ -202,10 +202,9 @@
     .btn-primary:hover { background: var(--coral-dark); }
 
     .btn-outline {
-      display: block;
-      width: 100%;
+      display: inline-block;
       text-align: center;
-      padding: 14px 24px;
+      padding: 12px 32px;
       background: transparent;
       color: var(--white);
       font-size: 15px;
@@ -238,15 +237,17 @@
     }
 
     /* ——— DESTACADOS ——— */
-    .cards-carousel {
-      position: relative;
+    .destacados-header {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 20px;
+      margin-bottom: 20px;
     }
+    .destacados-texts { text-align: left; }
+    .carousel-nav { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
 
     .carousel-btn {
-      position: absolute;
-      z-index: 10;
       width: 36px; height: 36px;
       border-radius: 50%;
       background: var(--white);
@@ -262,8 +263,6 @@
     }
     .carousel-btn:hover { background: var(--coral); color: var(--white); border-color: var(--coral); }
     .carousel-btn:disabled { opacity: .3; pointer-events: none; }
-    .carousel-btn--prev { left: 4px; }
-    .carousel-btn--next { right: 4px; }
 
     .cards-scroll {
       display: flex;
@@ -631,13 +630,11 @@
       <button class="nav-close" id="closeBtn" aria-label="Cerrar menú">
         <i class="fa-solid fa-xmark"></i>
       </button>
-      <a href="#" class="nav-link">Directorio pet-friendly</a>
-      <a href="#" class="nav-link">Adopción</a>
-      <a href="#" class="nav-link">Últimas noticias</a>
-      <a href="#" class="nav-link">Eventos</a>
-      <a href="#" class="nav-link">Comunidad</a>
-      <a href="#" class="nav-link">Sobre nosotros</a>
-      <a href="#" class="nav-link">Contacto</a>
+      <a href="directorio.html"            class="nav-link">Directorios</a>
+      <a href="adopcion.html"              class="nav-link">Adopción</a>
+      <a href="vida-social-pet.html"       class="nav-link">Vida social</a>
+      <a href="noticias-y-tendencias.html" class="nav-link">Noticias y tendencias</a>
+      <a href="columnas.html"              class="nav-link">Columnas</a>
     </nav>
   </div>
 
@@ -651,7 +648,7 @@
       </div>
     </div>
     <div class="hero-content">
-      <h1 class="hero-tagline">Todo sobre tus mascotas, en un solo lugar</h1>
+      <h1 class="hero-tagline">Todo para tus mascotas</h1>
       <p class="hero-subcopy">Descubre artículos, eventos y lugares pet-friendly cerca de ti. La comunidad que tus mascotas merecen.</p>
       <div class="hero-ctas">
         <a href="#" class="btn-primary">Lorem ipsum dolor sit</a>
@@ -664,17 +661,22 @@
        DESTACADOS DE LA SEMANA
   ═══════════════════════════════ -->
   <section class="destacados">
-    <div class="section-header">
-      <p class="section-eyebrow">Destacados</p>
-      <h2 class="section-title">Lo mejor de la semana</h2>
+    <div class="destacados-header">
+      <div class="destacados-texts">
+        <p class="section-eyebrow">Destacados</p>
+        <h2 class="section-title">Lo mejor de la semana</h2>
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="carouselPrev" aria-label="Anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="carousel-btn" id="carouselNext" aria-label="Siguiente">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
     </div>
 
-    <div class="cards-carousel">
-      <button class="carousel-btn carousel-btn--prev" id="carouselPrev" aria-label="Anterior">
-        <i class="fa-solid fa-chevron-left"></i>
-      </button>
-
-      <div class="cards-scroll" id="cardsScroll">
+    <div class="cards-scroll" id="cardsScroll">
 
         <!-- Card 1 — Artículo -->
         <article class="card">
@@ -722,11 +724,6 @@
         </article>
 
       </div>
-
-      <button class="carousel-btn carousel-btn--next" id="carouselNext" aria-label="Siguiente">
-        <i class="fa-solid fa-chevron-right"></i>
-      </button>
-    </div>
   </section>
 
   <!-- ═══════════════════════════════
