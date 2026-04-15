@@ -103,11 +103,11 @@
     }
     .hero-byline-dot { width: 3px; height: 3px; background: rgba(255,255,255,.4); border-radius: 50%; }
     .hero-ver-mas {
-      display: inline-flex; align-items: center; gap: 8px;
-      margin-top: 18px;
-      padding: 12px 28px;
+      display: inline-flex; align-items: center; gap: 7px;
+      margin-top: 16px;
+      padding: 9px 20px;
       background: var(--coral); color: var(--white);
-      font-size: 14px; font-weight: 800;
+      font-size: 13px; font-weight: 800;
       border: none; border-radius: var(--r-pill);
       cursor: pointer; transition: background .2s;
       text-decoration: none;
@@ -180,17 +180,26 @@
     .gallery-title-text { font-size: 16px; font-weight: 800; color: var(--dark); margin-bottom: 6px; line-height: 1.3; }
     .gallery-caption { font-size: 13px; color: var(--gray); line-height: 1.5; margin-bottom: 12px; }
 
-    /* Grid 2×2 fotos */
-    .gallery-grid-2x2 {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
-    }
-    .gallery-grid-photo {
-      aspect-ratio: 1/1;
+    /* Foto única por evento */
+    .gallery-single-photo {
+      width: 100%; aspect-ratio: 4/3;
       display: flex; align-items: center; justify-content: center;
-      font-size: 34px; color: rgba(255,255,255,.4);
+      font-size: 38px; color: rgba(255,255,255,.4);
       cursor: pointer; overflow: hidden; transition: filter .2s;
     }
-    .gallery-grid-photo:hover { filter: brightness(.83); }
+    .gallery-single-photo:hover { filter: brightness(.83); }
+
+    /* Grid 2 columnas para la sección de eventos */
+    .gallery-events-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .gallery-events-grid .gallery-card { margin-bottom: 0; }
+    .gallery-events-grid .gallery-footer { padding: 10px 12px 12px; }
+    .gallery-events-grid .gallery-title-text { font-size: 13px; }
+    .gallery-events-grid .gallery-date { font-size: 10px; }
+    .gallery-events-grid .btn-gallery-open {
+      font-size: 11px; padding: 8px 12px; margin-top: 8px !important;
+    }
 
     .gallery-actions { display: flex; gap: 8px; align-items: center; }
     .btn-gallery-open {
@@ -359,12 +368,14 @@
       padding: 12px 14px;
     }
     .interview-read-more {
-      display: flex; align-items: center; gap: 6px;
-      padding: 0 16px 16px;
+      display: inline-flex; align-items: center; gap: 6px;
+      margin: 0 16px 16px; padding: 7px 16px;
       font-size: 12px; font-weight: 700; color: var(--coral);
-      background: none; border: none; cursor: pointer;
-      text-decoration: none;
+      background: none; border: 1.5px solid var(--coral);
+      border-radius: var(--r-pill); cursor: pointer;
+      text-decoration: none; transition: background .2s, color .2s;
     }
+    .interview-read-more:hover { background: var(--coral); color: var(--white); }
 
     /* ═══ LIGHTBOX ═══ */
     .lightbox {
@@ -546,13 +557,7 @@
   <div class="hero-editorial-bg"><i class="fa-solid fa-paw"></i></div>
   <div class="hero-editorial-overlay"></div>
   <div class="hero-editorial-body">
-    <span class="hero-badge">✦ Portada del mes</span>
     <h1 class="hero-headline">La escena pet-friendly de Santiago está en su mejor momento</h1>
-    <div class="hero-byline">
-      <span>Por Valentina Rojas</span>
-      <div class="hero-byline-dot"></div>
-      <span>Abril 2026</span>
-    </div>
     <button class="hero-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></button>
   </div>
 </div>
@@ -567,50 +572,33 @@
       <p class="mag-section-sub">Lo mejor de las inauguraciones, pet walks y encuentros del mes.</p>
     </div>
 
-    <!-- Galería 1: Pet Walk Bellavista -->
-    <div class="gallery-card">
-      <div class="gallery-grid-2x2">
-        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53)" onclick="openLightbox('petwalk',0)"><i class="fa-solid fa-dog"></i></div>
-        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#F59E0B,#FCD34D)" onclick="openLightbox('petwalk',1)"><i class="fa-solid fa-paw"></i></div>
-        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#10B981,#6EE7B7)" onclick="openLightbox('petwalk',2)"><i class="fa-solid fa-dog"></i></div>
-        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#6366F1,#A5B4FC)" onclick="openLightbox('petwalk',3)"><i class="fa-solid fa-heart"></i></div>
-      </div>
-      <div class="gallery-footer">
-        <div class="gallery-title-text">Pet Walk Bellavista 2026</div>
-        <div class="gallery-date"><i class="fa-regular fa-calendar"></i> 22 marzo 2026</div>
-        <button class="btn-gallery-open" onclick="openLightbox('petwalk',0)" style="margin-top:10px;">Ver más <i class="fa-solid fa-arrow-right"></i></button>
-      </div>
-    </div>
+    <div class="gallery-events-grid">
 
-    <!-- Galería 2: Inauguración Café La Huella -->
-    <div class="gallery-card">
-      <div class="gallery-grid-2x2">
-        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#92400E,#D97706)" onclick="openLightbox('cafe',0)"><i class="fa-solid fa-mug-hot"></i></div>
-        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#065F46,#34D399)" onclick="openLightbox('cafe',1)"><i class="fa-solid fa-cat"></i></div>
-        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#1E3A8A,#60A5FA)" onclick="openLightbox('cafe',2)"><i class="fa-solid fa-dog"></i></div>
-        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#7C3AED,#C4B5FD)" onclick="openLightbox('cafe',3)"><i class="fa-solid fa-paw"></i></div>
+      <!-- Evento 1: Pet Walk Bellavista -->
+      <div class="gallery-card">
+        <div class="gallery-single-photo" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53)" onclick="openLightbox('petwalk',0)">
+          <i class="fa-solid fa-dog"></i>
+        </div>
+        <div class="gallery-footer">
+          <div class="gallery-title-text">Pet Walk Bellavista 2026</div>
+          <div class="gallery-date"><i class="fa-regular fa-calendar"></i> 22 marzo 2026</div>
+          <button class="btn-gallery-open" onclick="openLightbox('petwalk',0)">Ver más <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
       </div>
-      <div class="gallery-footer">
-        <div class="gallery-title-text">Inauguración Café La Huella</div>
-        <div class="gallery-date"><i class="fa-regular fa-calendar"></i> 5 abril 2026</div>
-        <button class="btn-gallery-open" onclick="openLightbox('cafe',0)" style="margin-top:10px;">Ver más <i class="fa-solid fa-arrow-right"></i></button>
-      </div>
-    </div>
 
-    <!-- Galería 3: Encuentro Poodler -->
-    <div class="gallery-card">
-      <div class="gallery-grid-2x2">
-        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#0EA5E9,#7DD3FC)" onclick="openLightbox('encuentro',0)"><i class="fa-solid fa-people-group"></i></div>
-        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#F43F5E,#FDA4AF)" onclick="openLightbox('encuentro',1)"><i class="fa-solid fa-dog"></i></div>
-        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#84CC16,#BEF264)" onclick="openLightbox('encuentro',2)"><i class="fa-solid fa-paw"></i></div>
-        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#A855F7,#E9D5FF)" onclick="openLightbox('encuentro',3)"><i class="fa-solid fa-trophy"></i></div>
+      <!-- Evento 2: Inauguración Café La Huella -->
+      <div class="gallery-card">
+        <div class="gallery-single-photo" style="background:linear-gradient(135deg,#92400E,#D97706)" onclick="openLightbox('cafe',0)">
+          <i class="fa-solid fa-mug-hot"></i>
+        </div>
+        <div class="gallery-footer">
+          <div class="gallery-title-text">Inauguración Café La Huella</div>
+          <div class="gallery-date"><i class="fa-regular fa-calendar"></i> 5 abril 2026</div>
+          <button class="btn-gallery-open" onclick="openLightbox('cafe',0)">Ver más <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
       </div>
-      <div class="gallery-footer">
-        <div class="gallery-title-text">Encuentro Poodler Santiago</div>
-        <div class="gallery-date"><i class="fa-regular fa-calendar"></i> 12 abril 2026</div>
-        <button class="btn-gallery-open" onclick="openLightbox('encuentro',0)" style="margin-top:10px;">Ver más <i class="fa-solid fa-arrow-right"></i></button>
-      </div>
-    </div>
+
+    </div><!-- /gallery-events-grid -->
 
   </div><!-- /sección fotogalerías -->
 
@@ -673,6 +661,8 @@
       </div>
 
     </div>
+
+    <a href="#" class="btn-verlas-todas" style="margin-top:16px;">Ver más <i class="fa-solid fa-arrow-right"></i></a>
   </div>
 
   <!-- ═══════════════════════ SECCIÓN: TOP 5 ═══════════════════════ -->
@@ -776,7 +766,7 @@
           <blockquote class="interview-quote">
             "Tener a Coco cambió completamente cómo exploramos la ciudad. Ahora elegimos restaurantes y cafés según si aceptan perros. Santiago tiene cada vez más opciones y eso es increíble."
           </blockquote>
-          <a href="#" class="interview-read-more">Leer entrevista completa <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="#" class="interview-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
         <div class="interview-card">
@@ -797,7 +787,7 @@
           <blockquote class="interview-quote">
             "Thor me enseñó que la mejor forma de conocer los barrios de Santiago es a pie y con él. Cada caminata es un descubrimiento. Los pet walks son lo mejor que ha pasado en la ciudad."
           </blockquote>
-          <a href="#" class="interview-read-more">Leer entrevista completa <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="#" class="interview-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
         <div class="interview-card">
@@ -818,7 +808,7 @@
           <blockquote class="interview-quote">
             "Los cat-friendly cafés son un fenómeno que llegó para quedarse. Nube viene conmigo siempre que puedo y la gente la ama. La cultura pet-friendly en Santiago creció muchísimo."
           </blockquote>
-          <a href="#" class="interview-read-more">Leer entrevista completa <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="#" class="interview-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
       </div><!-- /interview-carousel -->
