@@ -72,15 +72,72 @@
       overflow: hidden;
       margin-bottom: 0;
     }
+
+    /* Banner: escena de parque persona + perro */
     .hero-editorial-bg {
       position: absolute; inset: 0;
-      background: linear-gradient(145deg, #2D1654 0%, #FF5A45 60%, #FF8C6B 100%);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 90px; color: rgba(255,255,255,.12);
+      background: linear-gradient(180deg, #5B9BD5 0%, #85C1A3 52%, #4A8C52 100%);
+      overflow: hidden;
     }
+    /* Sol */
+    .hero-scene-sun {
+      position: absolute; top: 28px; right: 36px;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: radial-gradient(circle, #FFE066 60%, #FFB800 100%);
+      box-shadow: 0 0 48px 18px rgba(255,200,0,.35);
+    }
+    /* Nubes decorativas */
+    .hero-scene-cloud {
+      position: absolute; background: rgba(255,255,255,.55);
+      border-radius: 100px;
+    }
+    .hero-scene-cloud-1 { width: 72px; height: 22px; top: 42px; left: 24px; }
+    .hero-scene-cloud-1::before { content: ''; position: absolute; width: 38px; height: 34px; background: rgba(255,255,255,.55); border-radius: 50%; top: -16px; left: 14px; }
+    .hero-scene-cloud-2 { width: 52px; height: 16px; top: 72px; left: 100px; opacity: .7; }
+    /* Césped */
+    .hero-scene-ground {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 90px;
+      background: linear-gradient(180deg, #4A8C52 0%, #2E5E30 100%);
+      border-radius: 50% 50% 0 0 / 18px 18px 0 0;
+    }
+    /* Árbol */
+    .hero-scene-tree {
+      position: absolute; bottom: 72px; right: 28px;
+    }
+    .hero-scene-tree-trunk {
+      width: 12px; height: 36px; background: #6B4226;
+      margin: 0 auto; border-radius: 3px;
+    }
+    .hero-scene-tree-top {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #5DBD6A, #2E7D32);
+      margin: 0 auto; margin-bottom: -8px;
+    }
+    /* Persona + perro */
+    .hero-scene-figures {
+      position: absolute; bottom: 78px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; align-items: flex-end; gap: 10px;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,.28));
+    }
+    .hero-scene-figures .fig-person {
+      font-size: 72px; color: rgba(255,255,255,.92); line-height: 1;
+    }
+    .hero-scene-figures .fig-dog {
+      font-size: 48px; color: rgba(255,255,255,.88); line-height: 1;
+    }
+    /* Pelota decorativa */
+    .hero-scene-ball {
+      position: absolute; bottom: 88px; left: calc(50% + 72px);
+      width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #FF6B6B, #C0392B);
+      box-shadow: 0 2px 6px rgba(0,0,0,.3);
+    }
+
     .hero-editorial-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,.82) 0%, rgba(0,0,0,.1) 55%, transparent 100%);
+      background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.08) 50%, transparent 100%);
     }
     .hero-editorial-body {
       position: absolute; bottom: 0; left: 0; right: 0;
@@ -103,11 +160,11 @@
     }
     .hero-byline-dot { width: 3px; height: 3px; background: rgba(255,255,255,.4); border-radius: 50%; }
     .hero-ver-mas {
-      display: inline-flex; align-items: center; gap: 7px;
-      margin-top: 16px;
-      padding: 9px 20px;
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 14px;
+      padding: 8px 16px;
       background: var(--coral); color: var(--white);
-      font-size: 13px; font-weight: 800;
+      font-size: 12px; font-weight: 800;
       border: none; border-radius: var(--r-pill);
       cursor: pointer; transition: background .2s;
       text-decoration: none;
@@ -317,11 +374,12 @@
       flex: 0 0 280px; scroll-snap-align: start;
     }
     .btn-verlas-todas {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      width: 100%; margin-top: 16px; padding: 12px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      padding: 9px 24px;
       border: 1.5px solid var(--coral); border-radius: var(--r-pill);
       background: transparent; color: var(--coral);
-      font-size: 14px; font-weight: 700; cursor: pointer;
+      font-size: 13px; font-weight: 700; cursor: pointer;
+      text-decoration: none;
       transition: background .2s, color .2s;
     }
     .btn-verlas-todas:hover { background: var(--coral); color: var(--white); }
@@ -554,7 +612,27 @@
 
 <!-- ═══════════════════════ HERO EDITORIAL ═══════════════════════ -->
 <div class="hero-editorial">
-  <div class="hero-editorial-bg"><i class="fa-solid fa-paw"></i></div>
+  <div class="hero-editorial-bg">
+    <!-- Sol -->
+    <div class="hero-scene-sun"></div>
+    <!-- Nubes -->
+    <div class="hero-scene-cloud hero-scene-cloud-1"></div>
+    <div class="hero-scene-cloud hero-scene-cloud-2"></div>
+    <!-- Árbol -->
+    <div class="hero-scene-tree">
+      <div class="hero-scene-tree-top"></div>
+      <div class="hero-scene-tree-trunk"></div>
+    </div>
+    <!-- Persona jugando con perro -->
+    <div class="hero-scene-figures">
+      <i class="fa-solid fa-person-running fig-person"></i>
+      <i class="fa-solid fa-dog fig-dog"></i>
+    </div>
+    <!-- Pelota -->
+    <div class="hero-scene-ball"></div>
+    <!-- Césped -->
+    <div class="hero-scene-ground"></div>
+  </div>
   <div class="hero-editorial-overlay"></div>
   <div class="hero-editorial-body">
     <h1 class="hero-headline">La escena pet-friendly de Santiago está en su mejor momento</h1>
@@ -662,7 +740,9 @@
 
     </div>
 
-    <a href="#" class="btn-verlas-todas" style="margin-top:16px;">Ver más <i class="fa-solid fa-arrow-right"></i></a>
+    <div style="text-align:center; margin-top:16px;">
+      <a href="#" class="btn-verlas-todas">Ver más <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
   </div>
 
   <!-- ═══════════════════════ SECCIÓN: TOP 5 ═══════════════════════ -->
@@ -814,7 +894,9 @@
       </div><!-- /interview-carousel -->
     </div><!-- /interview-carousel-wrap -->
 
-    <button class="btn-verlas-todas">Verlas todas <i class="fa-solid fa-arrow-right"></i></button>
+    <div style="text-align:center; margin-top:16px;">
+      <button class="btn-verlas-todas">Verlas todas <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
 
   </div>
 
