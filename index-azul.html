@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PETS HUB — Azul</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral:        #99b7f5;
+      --coral-dark:   #99b0ed;
+      --dark:         #1C1C1E;
+      --footer-bg:    #111827;
+      --gray:         #6B7280;
+      --gray-light:   #EEF3FD;
+      --gray-border:  #D6E4FC;
+      --white:        #FFFFFF;
+      --r:            12px;
+      --r-sm:         8px;
+      --r-pill:       100px;
+    }
+
+    html { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+    body {
+      background: #fff;
+      color: var(--dark);
+      max-width: 430px;
+      margin: 0 auto;
+      overflow-x: hidden;
+    }
+
+    /* ——— HEADER ——— */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      height: 60px;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-border);
+    }
+    .header-logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: var(--dark);
+    }
+    .hamburger-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      font-size: 27px;
+      color: var(--dark);
+      line-height: 1;
+    }
+
+    /* ——— NAV OVERLAY ——— */
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .nav-overlay.open { opacity: 1; pointer-events: all; }
+
+    .nav-drawer {
+      position: absolute;
+      top: 0; right: 0;
+      width: 280px; height: 100%;
+      background: var(--white);
+      padding: 20px;
+      transform: translateX(100%);
+      transition: transform .3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .nav-overlay.open .nav-drawer { transform: translateX(0); }
+
+    .nav-close {
+      align-self: flex-end;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: var(--dark);
+      padding: 6px;
+      margin-bottom: 12px;
+    }
+    .nav-link {
+      display: block;
+      padding: 14px 0;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--dark);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gray-border);
+    }
+    .nav-link:last-child { border-bottom: none; }
+
+    /* ——— HERO ——— */
+    .hero {
+      position: relative;
+      min-height: 540px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    /* Video ocupa todo el fondo de la sección */
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(155deg, #0d1b3e 0%, #1a3568 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* Degradado oscuro inferior para legibilidad del texto */
+    .hero-video::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,0)   0%,
+        rgba(0,0,0,.15) 40%,
+        rgba(0,0,0,.72) 100%);
+      pointer-events: none;
+    }
+
+    .play-btn {
+      position: relative;
+      z-index: 1;
+      width: 72px; height: 72px;
+      background: rgba(255,255,255,.14);
+      border: 2px solid rgba(255,255,255,.45);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: var(--white);
+      padding-left: 5px;
+      transition: background .2s, transform .2s;
+    }
+    .hero-video:hover .play-btn {
+      background: rgba(255,255,255,.24);
+      transform: scale(1.08);
+    }
+
+    /* Texto y CTAs encima del video */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 20px 40px;
+      text-align: center;
+    }
+    .hero-tagline {
+      font-size: 27px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      letter-spacing: -.3px;
+    }
+    .hero-subcopy {
+      font-size: 14px;
+      color: rgba(255,255,255,.75);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    .hero-ctas { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+
+    .btn-primary {
+      display: inline-block;
+      text-align: center;
+      padding: 13px 32px;
+      background: var(--coral);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: var(--r-pill);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .btn-primary:hover { background: var(--coral-dark); }
+
+    .btn-outline {
+      display: inline-block;
+      text-align: center;
+      padding: 12px 32px;
+      background: transparent;
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: var(--r-pill);
+      border: 2px solid rgba(255,255,255,.45);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.06); }
+
+    /* ——— SECTION BASE ——— */
+    section { padding: 36px 0; }
+
+    .section-header { padding: 0 20px; margin-bottom: 20px; text-align: center; }
+
+    .section-eyebrow {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 4px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -.3px;
+    }
+
+    /* ——— DESTACADOS ——— */
+    .destacados-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 20px;
+      margin-bottom: 20px;
+    }
+    .destacados-texts { text-align: left; }
+    .carousel-nav { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+
+    .carousel-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1.5px solid var(--gray-border);
+      box-shadow: 0 2px 8px rgba(0,0,0,.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--dark);
+      cursor: pointer;
+      transition: background .2s, color .2s, opacity .2s;
+    }
+    .carousel-btn:hover { background: var(--coral); color: var(--white); border-color: var(--coral); }
+    .carousel-btn:disabled { opacity: .3; pointer-events: none; }
+
+    .cards-scroll {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding: 4px 20px 12px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .cards-scroll::-webkit-scrollbar { display: none; }
+
+    .card {
+      flex: 0 0 232px;
+      background: var(--white);
+      border-radius: var(--r);
+      border: 1px solid var(--gray-border);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+    .card-img {
+      width: 100%;
+      height: 136px;
+      background: var(--gray-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #CBD5E1;
+      font-size: 36px;
+    }
+    .card-body { padding: 14px; }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: var(--r-pill);
+      margin-bottom: 10px;
+    }
+    .tag-articulo  { background: #cddbf9; color: #3a5bba; }
+    .tag-lugar     { background: #ECFDF5; color: #059669; }
+    .tag-adopcion  { background: #e8f0fe; color: #5878d4; }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.45;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+    .card-meta {
+      font-size: 11px;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* ——— ACCESOS RÁPIDOS ——— */
+    .accesos { background: var(--gray-light); }
+
+    .accesos-list {
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .acceso-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: var(--white);
+      border-radius: var(--r);
+      padding: 16px 18px;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--gray-border);
+      transition: box-shadow .2s;
+    }
+    .acceso-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+
+    .acceso-icon {
+      width: 56px; height: 56px;
+      background: rgba(153,183,245,.18);
+      border-radius: var(--r-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: var(--coral);
+      flex-shrink: 0;
+    }
+    .acceso-text { flex: 1; }
+    .acceso-text h3 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+    .acceso-text p  { font-size: 12px; color: var(--gray); line-height: 1.4; }
+    .acceso-chevron { color: #D1D5DB; font-size: 13px; }
+
+    /* ——— PRÓXIMOS EVENTOS ——— */
+    .eventos { background: var(--white); }
+
+    .eventos-banner {
+      margin: 0 20px;
+      background: linear-gradient(135deg, #f5f8fe 0%, #ddeafc 100%);
+      border: 1px solid var(--gray-border);
+      border-radius: var(--r);
+      padding: 24px 20px;
+    }
+
+    .date-pills-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    /* BIG pill */
+    .date-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--white);
+      border-radius: var(--r-sm);
+      overflow: hidden;
+      border: 1px solid var(--gray-border);
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+      min-width: 64px;
+      cursor: pointer;
+      transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease;
+      transform-origin: bottom center;
+    }
+    .date-pill:hover,
+    .date-pill.active {
+      transform: scale(1.18);
+      box-shadow: 0 8px 24px rgba(0,0,0,.14);
+    }
+    .date-pill-header {
+      background: var(--coral);
+      width: 100%;
+      text-align: center;
+      padding: 5px 0;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .date-pill-day {
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1;
+      padding: 8px 16px 4px;
+    }
+    .date-pill-month {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gray);
+      padding-bottom: 10px;
+    }
+
+    /* SMALL pills (50% smaller) */
+    .date-pill-sm {
+      min-width: 44px;
+      border-radius: 6px;
+    }
+    .date-pill-sm .date-pill-day {
+      font-size: 20px;
+      padding: 6px 10px 3px;
+    }
+    .date-pill-sm .date-pill-month {
+      font-size: 9px;
+      letter-spacing: 1px;
+      padding-bottom: 7px;
+    }
+
+    .eventos-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 4px;
+    }
+    .eventos-heading {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+
+    /* ——— NEWSLETTER ——— */
+    .newsletter {
+      background: #f0f5fe;
+      border-top: 1px solid #cddbf9;
+      border-bottom: 1px solid #cddbf9;
+    }
+    .newsletter-inner { padding: 0 24px; text-align: center; }
+
+    .newsletter-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .newsletter-sub {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .newsletter-form { display: flex; flex-direction: column; gap: 12px; }
+
+    .newsletter-input {
+      width: 100%;
+      padding: 15px 18px;
+      border: 1.5px solid var(--gray-border);
+      border-radius: var(--r-pill);
+      font-size: 15px;
+      color: var(--dark);
+      background: var(--white);
+      outline: none;
+      transition: border-color .2s;
+    }
+    .newsletter-input:focus { border-color: var(--coral); }
+    .newsletter-input::placeholder { color: #B0B8C4; }
+
+    .btn-newsletter {
+      width: 100%;
+      padding: 15px;
+      background: var(--coral);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--r-pill);
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-newsletter:hover { background: var(--coral-dark); }
+
+    .newsletter-legal {
+      font-size: 11px;
+      color: #B0B8C4;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+    .newsletter-legal a { color: #5878d4; text-decoration: underline; }
+
+    /* ——— FOOTER ——— */
+    footer {
+      background: var(--footer-bg);
+      color: rgba(255,255,255,.65);
+      padding: 40px 20px 28px;
+    }
+    .footer-logo-block { margin-bottom: 32px; }
+    .footer-logo {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .footer-tagline {
+      font-size: 13px;
+      color: rgba(255,255,255,.45);
+      line-height: 1.5;
+    }
+
+    .footer-links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px 10px;
+      margin-bottom: 32px;
+    }
+    .footer-col-title {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 11px;
+      color: rgba(255,255,255,.45);
+      text-decoration: none;
+      padding: 3px 0;
+      line-height: 1.6;
+      transition: color .2s;
+    }
+    .footer-col a:hover { color: var(--white); }
+
+    .footer-social-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+    .footer-social-icons {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .footer-social-icons a {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,.6);
+      font-size: 16px;
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .footer-social-icons a:hover { border-color: var(--coral); color: var(--coral); }
+
+    .footer-divider {
+      height: 1px;
+      background: rgba(255,255,255,.1);
+      margin-bottom: 20px;
+    }
+    .footer-legal {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    .footer-legal a {
+      font-size: 11px;
+      color: rgba(255,255,255,.4);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-legal a:hover { color: var(--white); }
+    .footer-copyright {
+      font-size: 11px;
+      color: rgba(255,255,255,.28);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════
+       HEADER
+  ═══════════════════════════════ -->
+  <header class="header">
+    <div class="header-logo">LOGO</div>
+    <button class="hamburger-btn" id="menuBtn" aria-label="Abrir menú">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </header>
+
+  <!-- ═══════════════════════════════
+       NAV OVERLAY
+  ═══════════════════════════════ -->
+  <div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+    <nav class="nav-drawer">
+      <button class="nav-close" id="closeBtn" aria-label="Cerrar menú">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <a href="directorio.html"            class="nav-link">Directorios</a>
+      <a href="adopcion.html"              class="nav-link">Adopción</a>
+      <a href="vida-social-pet.html"       class="nav-link">Vida social</a>
+      <a href="noticias-y-tendencias.html" class="nav-link">Noticias y tendencias</a>
+      <a href="columnas.html"              class="nav-link">Columnas</a>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════
+       HERO
+  ═══════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-video" role="img" aria-label="Placeholder de video">
+      <div class="play-btn">
+        <i class="fa-solid fa-play"></i>
+      </div>
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-tagline">Todo para tus mascotas</h1>
+      <p class="hero-subcopy">Descubre artículos, eventos y lugares pet-friendly cerca de ti. La comunidad que tus mascotas merecen.</p>
+      <div class="hero-ctas">
+        <a href="#" class="btn-primary">Lorem ipsum dolor sit</a>
+        <a href="#" class="btn-outline">Lorem ipsum dolor sit</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       DESTACADOS DE LA SEMANA
+  ═══════════════════════════════ -->
+  <section class="destacados">
+    <div class="destacados-header">
+      <div class="destacados-texts">
+        <p class="section-eyebrow">Destacados</p>
+        <h2 class="section-title">Lo mejor de la semana</h2>
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="carouselPrev" aria-label="Anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="carousel-btn" id="carouselNext" aria-label="Siguiente">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="cards-scroll" id="cardsScroll">
+
+        <!-- Card 1 — Artículo -->
+        <article class="card">
+          <div class="card-img">
+            <i class="fa-regular fa-image"></i>
+          </div>
+          <div class="card-body">
+            <span class="card-tag tag-articulo">Artículo</span>
+            <h3 class="card-title">Cómo cuidar la salud de tu perro en los meses de mayor calor</h3>
+            <div class="card-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Hace 2 horas · 5 min</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 — Lugar pet-friendly -->
+        <article class="card">
+          <div class="card-img">
+            <i class="fa-regular fa-image"></i>
+          </div>
+          <div class="card-body">
+            <span class="card-tag tag-lugar">Lugar pet-friendly</span>
+            <h3 class="card-title">Parque Bicentenario reabre su área para mascotas en Vitacura</h3>
+            <div class="card-meta">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Vitacura · Abierto ahora</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 — Mascota en adopción -->
+        <article class="card">
+          <div class="card-img">
+            <i class="fa-regular fa-image"></i>
+          </div>
+          <div class="card-body">
+            <span class="card-tag tag-adopcion">Mascota en adopción</span>
+            <h3 class="card-title">Luna, labradora de 2 años busca familia amorosa en Ñuñoa</h3>
+            <div class="card-meta">
+              <i class="fa-solid fa-paw"></i>
+              <span>Ñuñoa · Disponible</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       ACCESOS RÁPIDOS
+  ═══════════════════════════════ -->
+  <section class="accesos">
+    <div class="section-header">
+      <h2 class="section-title">Accesos rápidos</h2>
+    </div>
+    <div class="accesos-list">
+
+      <a href="#" class="acceso-item">
+        <div class="acceso-icon">
+          <i class="fa-solid fa-map-location-dot"></i>
+        </div>
+        <div class="acceso-text">
+          <h3>Directorio</h3>
+          <p>Lorem ipsum dolor sit amet</p>
+        </div>
+        <i class="fa-solid fa-chevron-right acceso-chevron"></i>
+      </a>
+
+      <a href="#" class="acceso-item">
+        <div class="acceso-icon">
+          <i class="fa-solid fa-paw"></i>
+        </div>
+        <div class="acceso-text">
+          <h3>Adopción</h3>
+          <p>Lorem ipsum dolor sit amet</p>
+        </div>
+        <i class="fa-solid fa-chevron-right acceso-chevron"></i>
+      </a>
+
+      <a href="#" class="acceso-item">
+        <div class="acceso-icon">
+          <i class="fa-regular fa-newspaper"></i>
+        </div>
+        <div class="acceso-text">
+          <h3>Últimas noticias</h3>
+          <p>Lorem ipsum dolor sit amet</p>
+        </div>
+        <i class="fa-solid fa-chevron-right acceso-chevron"></i>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       PRÓXIMOS EVENTOS
+  ═══════════════════════════════ -->
+  <section class="eventos">
+    <div class="section-header">
+      <p class="section-eyebrow">Agenda</p>
+      <h2 class="section-title">Próximos eventos</h2>
+    </div>
+
+    <div class="eventos-banner">
+      <div class="date-pills-row">
+
+        <!-- BIG — SAB 26 ABRIL -->
+        <div class="date-pill">
+          <div class="date-pill-header">SAB</div>
+          <div class="date-pill-day">26</div>
+          <div class="date-pill-month">ABRIL</div>
+        </div>
+
+        <!-- SMALL — 03 MAY -->
+        <div class="date-pill date-pill-sm">
+          <div class="date-pill-day">03</div>
+          <div class="date-pill-month">MAY</div>
+        </div>
+
+        <!-- SMALL — 17 MAY -->
+        <div class="date-pill date-pill-sm">
+          <div class="date-pill-day">17</div>
+          <div class="date-pill-month">MAY</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       NEWSLETTER
+  ═══════════════════════════════ -->
+  <section class="newsletter">
+    <div class="newsletter-inner">
+      <h2 class="newsletter-title">Recibe lo mejor de la semana en tu correo</h2>
+      <p class="newsletter-sub">Historias de adopción, recomendaciones y eventos. Sin spam.</p>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input class="newsletter-input" type="email" placeholder="tucorreo@correo.cl">
+        <button class="btn-newsletter" type="submit">Suscribirme</button>
+      </form>
+      <p class="newsletter-legal">Al suscribirte aceptas nuestra <a href="#">política de privacidad</a></p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════
+       FOOTER
+  ═══════════════════════════════ -->
+  <footer>
+    <div class="footer-logo-block">
+      <div class="footer-logo">LOGO</div>
+      <p class="footer-tagline">El hub para mascotas y sus familias en Chile.</p>
+    </div>
+
+    <div class="footer-links-grid">
+      <div class="footer-col">
+        <p class="footer-col-title">Explora</p>
+        <a href="#">Directorio pet-friendly</a>
+        <a href="#">Adopción</a>
+        <a href="#">Últimas noticias</a>
+        <a href="#">Eventos</a>
+        <a href="#">Comunidad</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Hub</p>
+        <a href="#">Sobre nosotros</a>
+        <a href="#">Para profesionales</a>
+        <a href="#">Aliados y refugios</a>
+        <a href="#">Trabaja con nosotros</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Ayuda</p>
+        <a href="#">Centro de ayuda</a>
+        <a href="#">Contacto</a>
+        <a href="#">Preguntas frecuentes</a>
+      </div>
+    </div>
+
+    <p class="footer-social-label">Síguenos</p>
+    <div class="footer-social-icons">
+      <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      <a href="#" aria-label="Threads"><i class="fa-brands fa-threads"></i></a>
+    </div>
+
+    <div class="footer-divider"></div>
+
+    <div class="footer-legal">
+      <a href="#">Términos</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Cookies</a>
+    </div>
+    <p class="footer-copyright">© 2026 HUB MASCOTAS · Hecho con 🐾 en Santiago</p>
+  </footer>
+
+  <script>
+    const menuBtn    = document.getElementById('menuBtn');
+    const closeBtn   = document.getElementById('closeBtn');
+    const navOverlay = document.getElementById('navOverlay');
+
+    function openNav() {
+      navOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+
+    function closeNav() {
+      navOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+      menuBtn.focus();
+    }
+
+    menuBtn.addEventListener('click', openNav);
+    closeBtn.addEventListener('click', closeNav);
+
+    // Close when clicking the dark backdrop (outside the drawer)
+    navOverlay.addEventListener('click', (e) => {
+      if (e.target === navOverlay) closeNav();
+    });
+
+    // Close with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navOverlay.classList.contains('open')) closeNav();
+    });
+
+    // ——— Calendar pills — touch support for mobile ———
+    document.querySelectorAll('.date-pill').forEach(pill => {
+      pill.addEventListener('touchstart', () => pill.classList.add('active'),    { passive: true });
+      pill.addEventListener('touchend',   () => pill.classList.remove('active'), { passive: true });
+    });
+
+    // ——— Carousel arrows ———
+    const scroll   = document.getElementById('cardsScroll');
+    const btnPrev  = document.getElementById('carouselPrev');
+    const btnNext  = document.getElementById('carouselNext');
+    const STEP     = 246; // card width + gap
+
+    function updateArrows() {
+      btnPrev.disabled = scroll.scrollLeft <= 0;
+      btnNext.disabled = scroll.scrollLeft + scroll.clientWidth >= scroll.scrollWidth - 1;
+    }
+
+    btnPrev.addEventListener('click', () => {
+      scroll.scrollBy({ left: -STEP, behavior: 'smooth' });
+    });
+    btnNext.addEventListener('click', () => {
+      scroll.scrollBy({ left: STEP, behavior: 'smooth' });
+    });
+    scroll.addEventListener('scroll', updateArrows);
+    updateArrows();
+  </script>
+</body>
+</html>
