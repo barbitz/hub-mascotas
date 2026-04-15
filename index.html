@@ -110,7 +110,7 @@
     /* ——— HERO ——— */
     .hero {
       position: relative;
-      min-height: 540px;
+      min-height: 620px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -124,11 +124,14 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(155deg, #1A1A2E 0%, #2D1B4E 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
+      background: #000;
+    }
+
+    .hero-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     /* Degradado oscuro inferior para legibilidad del texto */
@@ -138,36 +141,16 @@
       inset: 0;
       background: linear-gradient(to bottom,
         rgba(0,0,0,0)   0%,
-        rgba(0,0,0,.15) 40%,
-        rgba(0,0,0,.72) 100%);
+        rgba(0,0,0,.08) 35%,
+        rgba(0,0,0,.78) 100%);
       pointer-events: none;
-    }
-
-    .play-btn {
-      position: relative;
-      z-index: 1;
-      width: 72px; height: 72px;
-      background: rgba(255,255,255,.14);
-      border: 2px solid rgba(255,255,255,.45);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      color: var(--white);
-      padding-left: 5px;
-      transition: background .2s, transform .2s;
-    }
-    .hero-video:hover .play-btn {
-      background: rgba(255,255,255,.24);
-      transform: scale(1.08);
     }
 
     /* Texto y CTAs encima del video */
     .hero-content {
       position: relative;
       z-index: 2;
-      padding: 0 20px 40px;
+      padding: 0 20px 52px;
       text-align: center;
     }
     .hero-tagline {
@@ -642,10 +625,10 @@
        HERO
   ═══════════════════════════════ -->
   <section class="hero">
-    <div class="hero-video" role="img" aria-label="Placeholder de video">
-      <div class="play-btn">
-        <i class="fa-solid fa-play"></i>
-      </div>
+    <div class="hero-video">
+      <video autoplay muted loop playsinline>
+        <source src="4 V2.mp4" type="video/mp4">
+      </video>
     </div>
     <div class="hero-content">
       <h1 class="hero-tagline">Todo para tus mascotas</h1>
