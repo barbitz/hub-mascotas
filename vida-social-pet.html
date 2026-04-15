@@ -102,20 +102,17 @@
       display: flex; align-items: center; gap: 8px;
     }
     .hero-byline-dot { width: 3px; height: 3px; background: rgba(255,255,255,.4); border-radius: 50%; }
-    .hero-share-row {
-      display: flex; gap: 10px; margin-top: 16px;
+    .hero-ver-mas {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 18px;
+      padding: 12px 28px;
+      background: var(--coral); color: var(--white);
+      font-size: 14px; font-weight: 800;
+      border: none; border-radius: var(--r-pill);
+      cursor: pointer; transition: background .2s;
+      text-decoration: none;
     }
-    .hero-share-btn {
-      display: flex; align-items: center; gap: 6px;
-      padding: 7px 14px;
-      background: rgba(255,255,255,.15);
-      border: 1px solid rgba(255,255,255,.3);
-      border-radius: var(--r-pill);
-      color: var(--white); font-size: 12px; font-weight: 600;
-      cursor: pointer; backdrop-filter: blur(4px);
-      text-decoration: none; transition: background .2s;
-    }
-    .hero-share-btn:hover { background: rgba(255,255,255,.25); }
+    .hero-ver-mas:hover { background: var(--coral-dark); }
 
     /* ═══ GALERÍAS ═══ */
     .gallery-card {
@@ -182,6 +179,18 @@
     }
     .gallery-title-text { font-size: 16px; font-weight: 800; color: var(--dark); margin-bottom: 6px; line-height: 1.3; }
     .gallery-caption { font-size: 13px; color: var(--gray); line-height: 1.5; margin-bottom: 12px; }
+
+    /* Grid 2×2 fotos */
+    .gallery-grid-2x2 {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    }
+    .gallery-grid-photo {
+      aspect-ratio: 1/1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 34px; color: rgba(255,255,255,.4);
+      cursor: pointer; overflow: hidden; transition: filter .2s;
+    }
+    .gallery-grid-photo:hover { filter: brightness(.83); }
 
     .gallery-actions { display: flex; gap: 8px; align-items: center; }
     .btn-gallery-open {
@@ -276,7 +285,37 @@
 
     .ranking-crown { font-size: 18px; flex-shrink: 0; }
 
-    /* ═══ ENTREVISTAS ═══ */
+    /* ═══ ENTREVISTAS (CARRUSEL) ═══ */
+    .interview-carousel-wrap { position: relative; }
+    .interview-carousel-arrows { display: flex; gap: 8px; justify-content: flex-end; margin-bottom: 14px; }
+    .interview-carousel-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid var(--gray-border);
+      background: var(--white); color: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; cursor: pointer; transition: border-color .2s, color .2s;
+    }
+    .interview-carousel-btn:disabled { opacity: .3; pointer-events: none; }
+    .interview-carousel-btn:not(:disabled):hover { border-color: var(--coral); color: var(--coral); }
+    .interview-carousel {
+      display: flex; gap: 16px;
+      overflow-x: auto; scrollbar-width: none;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 4px;
+    }
+    .interview-carousel::-webkit-scrollbar { display: none; }
+    .interview-carousel .interview-card {
+      flex: 0 0 280px; scroll-snap-align: start;
+    }
+    .btn-verlas-todas {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; margin-top: 16px; padding: 12px;
+      border: 1.5px solid var(--coral); border-radius: var(--r-pill);
+      background: transparent; color: var(--coral);
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .btn-verlas-todas:hover { background: var(--coral); color: var(--white); }
     .interview-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 4px; }
 
     .interview-card {
@@ -514,17 +553,7 @@
       <div class="hero-byline-dot"></div>
       <span>Abril 2026</span>
     </div>
-    <div class="hero-share-row">
-      <button class="hero-share-btn" onclick="triggerShare('instagram')">
-        <i class="fa-brands fa-instagram"></i> Story
-      </button>
-      <button class="hero-share-btn" onclick="triggerShare('whatsapp')">
-        <i class="fa-brands fa-whatsapp"></i> Compartir
-      </button>
-      <button class="hero-share-btn" onclick="copyLink()">
-        <i class="fa-solid fa-link"></i> Copiar
-      </button>
-    </div>
+    <button class="hero-ver-mas">Ver más <i class="fa-solid fa-arrow-right"></i></button>
   </div>
 </div>
 
@@ -533,125 +562,53 @@
   <!-- ═══════════════════════ SECCIÓN: FOTOGALERÍAS ═══════════════════════ -->
   <div class="mag-section">
     <div class="mag-section-head">
-      <div class="mag-eyebrow"><i class="fa-solid fa-camera"></i> Fotogalerías</div>
-      <h2 class="mag-section-title">Eventos pet-friendly</h2>
+      <div class="mag-eyebrow"><i class="fa-solid fa-calendar"></i> EVENTOS</div>
+      <h2 class="mag-section-title">Eventos abril 2026</h2>
       <p class="mag-section-sub">Lo mejor de las inauguraciones, pet walks y encuentros del mes.</p>
     </div>
 
     <!-- Galería 1: Pet Walk Bellavista -->
     <div class="gallery-card">
-      <div class="gallery-main-thumb"
-           style="background: linear-gradient(135deg,#FF6B6B,#FF8E53)"
-           data-gallery="petwalk" data-index="0">
-        <i class="fa-solid fa-dog"></i>
-        <div class="gallery-play-badge"><i class="fa-solid fa-images"></i> 8 fotos</div>
-        <div class="gallery-zoom-icon"><i class="fa-solid fa-expand"></i></div>
-      </div>
-      <div class="gallery-strip">
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53)" data-gallery="petwalk" data-index="0"><i class="fa-solid fa-dog"></i></div>
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#F59E0B,#FCD34D)" data-gallery="petwalk" data-index="1"><i class="fa-solid fa-paw"></i></div>
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#10B981,#6EE7B7)" data-gallery="petwalk" data-index="2"><i class="fa-solid fa-dog"></i></div>
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#6366F1,#A5B4FC)" data-gallery="petwalk" data-index="3"><i class="fa-solid fa-heart"></i></div>
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#EC4899,#F9A8D4)" data-gallery="petwalk" data-index="4">
-          <i class="fa-solid fa-dog"></i>
-          <div class="gallery-thumb-more">+4</div>
-        </div>
+      <div class="gallery-grid-2x2">
+        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53)" onclick="openLightbox('petwalk',0)"><i class="fa-solid fa-dog"></i></div>
+        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#F59E0B,#FCD34D)" onclick="openLightbox('petwalk',1)"><i class="fa-solid fa-paw"></i></div>
+        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#10B981,#6EE7B7)" onclick="openLightbox('petwalk',2)"><i class="fa-solid fa-dog"></i></div>
+        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#6366F1,#A5B4FC)" onclick="openLightbox('petwalk',3)"><i class="fa-solid fa-heart"></i></div>
       </div>
       <div class="gallery-footer">
-        <div class="gallery-meta">
-          <span class="gallery-date"><i class="fa-regular fa-calendar"></i> 22 marzo 2026</span>
-          <div class="gallery-date">·</div>
-          <span class="gallery-count"><i class="fa-solid fa-location-dot"></i> Bellavista</span>
-        </div>
         <div class="gallery-title-text">Pet Walk Bellavista 2026</div>
-        <p class="gallery-caption">Más de 300 perros y sus familias se tomaron el barrio Bellavista en la primera gran caminata pet-friendly del año. Música en vivo, food trucks y premios para los más originales.</p>
-        <div class="gallery-actions">
-          <button class="btn-gallery-open" onclick="openLightbox('petwalk', 0)">
-            <i class="fa-solid fa-images"></i> Abrir galería
-          </button>
-          <div class="gallery-share-btns">
-            <button class="btn-share-sm" title="Compartir en Instagram" onclick="triggerShare('instagram')"><i class="fa-brands fa-instagram"></i></button>
-            <button class="btn-share-sm" title="Compartir en WhatsApp"  onclick="triggerShare('whatsapp')"><i class="fa-brands fa-whatsapp"></i></button>
-            <button class="btn-share-sm" title="Copiar enlace"          onclick="copyLink()"><i class="fa-solid fa-link"></i></button>
-          </div>
-        </div>
+        <div class="gallery-date"><i class="fa-regular fa-calendar"></i> 22 marzo 2026</div>
+        <button class="btn-gallery-open" onclick="openLightbox('petwalk',0)" style="margin-top:10px;">Ver más <i class="fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
 
     <!-- Galería 2: Inauguración Café La Huella -->
     <div class="gallery-card">
-      <div class="gallery-main-thumb"
-           style="background: linear-gradient(135deg,#92400E,#D97706)"
-           data-gallery="cafe" data-index="0">
-        <i class="fa-solid fa-mug-hot"></i>
-        <div class="gallery-play-badge"><i class="fa-solid fa-images"></i> 6 fotos</div>
-        <div class="gallery-zoom-icon"><i class="fa-solid fa-expand"></i></div>
-      </div>
-      <div class="gallery-strip">
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#92400E,#D97706)" data-gallery="cafe" data-index="0"><i class="fa-solid fa-mug-hot"></i></div>
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#065F46,#34D399)" data-gallery="cafe" data-index="1"><i class="fa-solid fa-cat"></i></div>
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#1E3A8A,#60A5FA)" data-gallery="cafe" data-index="2"><i class="fa-solid fa-dog"></i></div>
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#7C3AED,#C4B5FD)" data-gallery="cafe" data-index="3"><i class="fa-solid fa-paw"></i></div>
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#BE185D,#F9A8D4)" data-gallery="cafe" data-index="4">
-          <i class="fa-solid fa-heart"></i>
-          <div class="gallery-thumb-more">+2</div>
-        </div>
+      <div class="gallery-grid-2x2">
+        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#92400E,#D97706)" onclick="openLightbox('cafe',0)"><i class="fa-solid fa-mug-hot"></i></div>
+        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#065F46,#34D399)" onclick="openLightbox('cafe',1)"><i class="fa-solid fa-cat"></i></div>
+        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#1E3A8A,#60A5FA)" onclick="openLightbox('cafe',2)"><i class="fa-solid fa-dog"></i></div>
+        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#7C3AED,#C4B5FD)" onclick="openLightbox('cafe',3)"><i class="fa-solid fa-paw"></i></div>
       </div>
       <div class="gallery-footer">
-        <div class="gallery-meta">
-          <span class="gallery-date"><i class="fa-regular fa-calendar"></i> 5 abril 2026</span>
-          <div class="gallery-date">·</div>
-          <span class="gallery-count"><i class="fa-solid fa-location-dot"></i> Providencia</span>
-        </div>
         <div class="gallery-title-text">Inauguración Café La Huella</div>
-        <p class="gallery-caption">El nuevo café pet-friendly de Av. Italia abrió sus puertas con una fiesta de bienvenida para perros y gatos. Menú especial para mascotas incluido.</p>
-        <div class="gallery-actions">
-          <button class="btn-gallery-open" onclick="openLightbox('cafe', 0)">
-            <i class="fa-solid fa-images"></i> Abrir galería
-          </button>
-          <div class="gallery-share-btns">
-            <button class="btn-share-sm" onclick="triggerShare('instagram')"><i class="fa-brands fa-instagram"></i></button>
-            <button class="btn-share-sm" onclick="triggerShare('whatsapp')"><i class="fa-brands fa-whatsapp"></i></button>
-            <button class="btn-share-sm" onclick="copyLink()"><i class="fa-solid fa-link"></i></button>
-          </div>
-        </div>
+        <div class="gallery-date"><i class="fa-regular fa-calendar"></i> 5 abril 2026</div>
+        <button class="btn-gallery-open" onclick="openLightbox('cafe',0)" style="margin-top:10px;">Ver más <i class="fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
 
     <!-- Galería 3: Encuentro Poodler -->
     <div class="gallery-card">
-      <div class="gallery-main-thumb"
-           style="background: linear-gradient(135deg,#0EA5E9,#7DD3FC)"
-           data-gallery="encuentro" data-index="0">
-        <i class="fa-solid fa-people-group"></i>
-        <div class="gallery-play-badge"><i class="fa-solid fa-images"></i> 5 fotos</div>
-        <div class="gallery-zoom-icon"><i class="fa-solid fa-expand"></i></div>
-      </div>
-      <div class="gallery-strip">
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#0EA5E9,#7DD3FC)" data-gallery="encuentro" data-index="0"><i class="fa-solid fa-people-group"></i></div>
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#F43F5E,#FDA4AF)" data-gallery="encuentro" data-index="1"><i class="fa-solid fa-dog"></i></div>
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#84CC16,#BEF264)" data-gallery="encuentro" data-index="2"><i class="fa-solid fa-paw"></i></div>
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#A855F7,#E9D5FF)" data-gallery="encuentro" data-index="3"><i class="fa-solid fa-trophy"></i></div>
-        <div class="gallery-thumb-sm" style="background:linear-gradient(135deg,#F97316,#FED7AA)" data-gallery="encuentro" data-index="4"><i class="fa-solid fa-heart"></i></div>
+      <div class="gallery-grid-2x2">
+        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#0EA5E9,#7DD3FC)" onclick="openLightbox('encuentro',0)"><i class="fa-solid fa-people-group"></i></div>
+        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#F43F5E,#FDA4AF)" onclick="openLightbox('encuentro',1)"><i class="fa-solid fa-dog"></i></div>
+        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#84CC16,#BEF264)" onclick="openLightbox('encuentro',2)"><i class="fa-solid fa-paw"></i></div>
+        <div class="gallery-grid-photo" style="background:linear-gradient(135deg,#A855F7,#E9D5FF)" onclick="openLightbox('encuentro',3)"><i class="fa-solid fa-trophy"></i></div>
       </div>
       <div class="gallery-footer">
-        <div class="gallery-meta">
-          <span class="gallery-date"><i class="fa-regular fa-calendar"></i> 12 abril 2026</span>
-          <div class="gallery-date">·</div>
-          <span class="gallery-count"><i class="fa-solid fa-location-dot"></i> Parque Bicentenario</span>
-        </div>
         <div class="gallery-title-text">Encuentro Poodler Santiago</div>
-        <p class="gallery-caption">El primer mega encuentro de Poodles y sus familias en Santiago reunió a más de 120 participantes en el Parque Bicentenario de Vitacura.</p>
-        <div class="gallery-actions">
-          <button class="btn-gallery-open" onclick="openLightbox('encuentro', 0)">
-            <i class="fa-solid fa-images"></i> Abrir galería
-          </button>
-          <div class="gallery-share-btns">
-            <button class="btn-share-sm" onclick="triggerShare('instagram')"><i class="fa-brands fa-instagram"></i></button>
-            <button class="btn-share-sm" onclick="triggerShare('whatsapp')"><i class="fa-brands fa-whatsapp"></i></button>
-            <button class="btn-share-sm" onclick="copyLink()"><i class="fa-solid fa-link"></i></button>
-          </div>
-        </div>
+        <div class="gallery-date"><i class="fa-regular fa-calendar"></i> 12 abril 2026</div>
+        <button class="btn-gallery-open" onclick="openLightbox('encuentro',0)" style="margin-top:10px;">Ver más <i class="fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
 
@@ -794,72 +751,81 @@
       <p class="mag-section-sub">Conversaciones breves con la comunidad pet-friendly de Santiago.</p>
     </div>
 
-    <div class="interview-list">
+    <div class="interview-carousel-wrap">
+      <div class="interview-carousel-arrows">
+        <button class="interview-carousel-btn" id="intPrev" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="interview-carousel-btn" id="intNext" aria-label="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <div class="interview-carousel" id="interviewCarousel">
 
-      <div class="interview-card">
-        <div class="interview-quote-mark">"</div>
-        <div class="interview-top">
-          <div class="interview-avatar" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53)">
-            <i class="fa-solid fa-user"></i>
-          </div>
-          <div class="interview-meta">
-            <div class="interview-name">Valentina Rojas</div>
-            <div class="interview-sub"><i class="fa-solid fa-paw"></i> Con Coco, quiltro 1 año · Providencia</div>
-            <div class="interview-tags">
-              <span class="interview-tag">🐕 Adoptante</span>
-              <span class="interview-tag">Foodie pet</span>
+        <div class="interview-card">
+          <div class="interview-quote-mark">"</div>
+          <div class="interview-top">
+            <div class="interview-avatar" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53)">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="interview-meta">
+              <div class="interview-name">Valentina Rojas</div>
+              <div class="interview-sub"><i class="fa-solid fa-paw"></i> Con Coco, quiltro 1 año · Providencia</div>
+              <div class="interview-tags">
+                <span class="interview-tag">🐕 Adoptante</span>
+                <span class="interview-tag">Foodie pet</span>
+              </div>
             </div>
           </div>
+          <blockquote class="interview-quote">
+            "Tener a Coco cambió completamente cómo exploramos la ciudad. Ahora elegimos restaurantes y cafés según si aceptan perros. Santiago tiene cada vez más opciones y eso es increíble."
+          </blockquote>
+          <a href="#" class="interview-read-more">Leer entrevista completa <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-        <blockquote class="interview-quote">
-          "Tener a Coco cambió completamente cómo exploramos la ciudad. Ahora elegimos restaurantes y cafés según si aceptan perros. Santiago tiene cada vez más opciones y eso es increíble."
-        </blockquote>
-        <a href="#" class="interview-read-more">Leer entrevista completa <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
 
-      <div class="interview-card">
-        <div class="interview-quote-mark">"</div>
-        <div class="interview-top">
-          <div class="interview-avatar" style="background:linear-gradient(135deg,#6366F1,#A5B4FC)">
-            <i class="fa-solid fa-user"></i>
-          </div>
-          <div class="interview-meta">
-            <div class="interview-name">Matías Vera</div>
-            <div class="interview-sub"><i class="fa-solid fa-paw"></i> Con Thor, Golden 3 años · Las Condes</div>
-            <div class="interview-tags">
-              <span class="interview-tag">🏃 Activo</span>
-              <span class="interview-tag">Parques</span>
+        <div class="interview-card">
+          <div class="interview-quote-mark">"</div>
+          <div class="interview-top">
+            <div class="interview-avatar" style="background:linear-gradient(135deg,#6366F1,#A5B4FC)">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="interview-meta">
+              <div class="interview-name">Matías Vera</div>
+              <div class="interview-sub"><i class="fa-solid fa-paw"></i> Con Thor, Golden 3 años · Las Condes</div>
+              <div class="interview-tags">
+                <span class="interview-tag">🏃 Activo</span>
+                <span class="interview-tag">Parques</span>
+              </div>
             </div>
           </div>
+          <blockquote class="interview-quote">
+            "Thor me enseñó que la mejor forma de conocer los barrios de Santiago es a pie y con él. Cada caminata es un descubrimiento. Los pet walks son lo mejor que ha pasado en la ciudad."
+          </blockquote>
+          <a href="#" class="interview-read-more">Leer entrevista completa <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-        <blockquote class="interview-quote">
-          "Thor me enseñó que la mejor forma de conocer los barrios de Santiago es a pie y con él. Cada caminata es un descubrimiento. Los pet walks son lo mejor que ha pasado en la ciudad."
-        </blockquote>
-        <a href="#" class="interview-read-more">Leer entrevista completa <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
 
-      <div class="interview-card">
-        <div class="interview-quote-mark">"</div>
-        <div class="interview-top">
-          <div class="interview-avatar" style="background:linear-gradient(135deg,#10B981,#34D399)">
-            <i class="fa-solid fa-user"></i>
-          </div>
-          <div class="interview-meta">
-            <div class="interview-name">Sofía Martínez</div>
-            <div class="interview-sub"><i class="fa-solid fa-cat"></i> Con Nube, gata angora · Ñuñoa</div>
-            <div class="interview-tags">
-              <span class="interview-tag">🐱 Cat lover</span>
-              <span class="interview-tag">Cafeterías</span>
+        <div class="interview-card">
+          <div class="interview-quote-mark">"</div>
+          <div class="interview-top">
+            <div class="interview-avatar" style="background:linear-gradient(135deg,#10B981,#34D399)">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="interview-meta">
+              <div class="interview-name">Sofía Martínez</div>
+              <div class="interview-sub"><i class="fa-solid fa-cat"></i> Con Nube, gata angora · Ñuñoa</div>
+              <div class="interview-tags">
+                <span class="interview-tag">🐱 Cat lover</span>
+                <span class="interview-tag">Cafeterías</span>
+              </div>
             </div>
           </div>
+          <blockquote class="interview-quote">
+            "Los cat-friendly cafés son un fenómeno que llegó para quedarse. Nube viene conmigo siempre que puedo y la gente la ama. La cultura pet-friendly en Santiago creció muchísimo."
+          </blockquote>
+          <a href="#" class="interview-read-more">Leer entrevista completa <i class="fa-solid fa-arrow-right"></i></a>
         </div>
-        <blockquote class="interview-quote">
-          "Los cat-friendly cafés son un fenómeno que llegó para quedarse. Nube viene conmigo siempre que puedo y la gente la ama. La cultura pet-friendly en Santiago creció muchísimo."
-        </blockquote>
-        <a href="#" class="interview-read-more">Leer entrevista completa <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
 
-    </div>
+      </div><!-- /interview-carousel -->
+    </div><!-- /interview-carousel-wrap -->
+
+    <button class="btn-verlas-todas">Verlas todas <i class="fa-solid fa-arrow-right"></i></button>
+
   </div>
 
 </div><!-- /mag-content -->
@@ -913,7 +879,7 @@
   <a href="index.html"      class="bottom-nav-item"><i class="fa-solid fa-house"></i>Inicio</a>
   <a href="directorio.html" class="bottom-nav-item"><i class="fa-solid fa-location-dot"></i>Directorio</a>
   <a href="adopcion.html"   class="bottom-nav-item"><i class="fa-solid fa-paw"></i>Adopción</a>
-  <a href="#"               class="bottom-nav-item active"><i class="fa-regular fa-newspaper"></i>Revista</a>
+  <a href="#"               class="bottom-nav-item active"><i class="fa-regular fa-newspaper"></i>Noticias</a>
 </nav>
 
 <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
@@ -1153,6 +1119,22 @@ function showToast() {
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2500);
 }
+
+// ═══════════════════════════════════════════════
+//  CARRUSEL ENTREVISTAS
+// ═══════════════════════════════════════════════
+const intCarousel = document.getElementById('interviewCarousel');
+const intPrev     = document.getElementById('intPrev');
+const intNext     = document.getElementById('intNext');
+
+function updateIntArrows() {
+  intPrev.disabled = intCarousel.scrollLeft <= 0;
+  intNext.disabled = intCarousel.scrollLeft + intCarousel.clientWidth >= intCarousel.scrollWidth - 2;
+}
+intPrev.addEventListener('click', () => { intCarousel.scrollBy({ left: -296, behavior: 'smooth' }); });
+intNext.addEventListener('click', () => { intCarousel.scrollBy({ left: 296, behavior: 'smooth' }); });
+intCarousel.addEventListener('scroll', updateIntArrows);
+updateIntArrows();
 
 // ═══════════════════════════════════════════════
 //  NAV HAMBURGUESA
