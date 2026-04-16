@@ -24,7 +24,7 @@
     }
 
     html { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    body { background: #fef6e8; color: var(--dark); max-width: 430px; margin: 0 auto; overflow-x: hidden; }
+    body { background: #fffaf4; color: var(--dark); max-width: 430px; margin: 0 auto; overflow-x: hidden; }
 
     /* ═══ HEADER ═══ */
     .header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 60px; background: var(--white); border-bottom: 1px solid var(--gray-border); }
@@ -70,11 +70,27 @@
     .search-field input::placeholder { color: var(--gray); }
 
     /* ═══ SECCIONES ═══ */
-    .section-block { padding: 28px 20px 0; }
-    .section-block + .section-block { border-top: 1px solid var(--gray-border); margin-top: 32px; }
+    .section-block { padding: 0 0 0; }
+    .section-block + .section-block { margin-top: 0; }
     .section-block:last-of-type { padding-bottom: 40px; }
+    .section-cards { padding: 0 20px; }
 
-    .section-head { margin-bottom: 18px; }
+    .section-head {
+      background: #fdeccb;
+      padding: 28px 20px 20px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #f5c98a;
+      position: relative;
+    }
+    .section-head::after {
+      content: '';
+      position: absolute;
+      bottom: -10px; left: 20px;
+      width: 0; height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid #f5c98a;
+    }
     .section-eyebrow {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 13px; font-weight: 800; letter-spacing: 2px;
@@ -84,13 +100,13 @@
     .section-eyebrow::before { display: none; }
     .section-eyebrow i { display: none; }
     .section-title { font-size: 22px; font-weight: 900; color: var(--dark); line-height: 1.2; letter-spacing: -.4px; }
-    .section-sub { font-size: 13px; color: var(--gray); margin-top: 4px; line-height: 1.5; }
+    .section-sub { font-size: 13px; color: #8a6030; margin-top: 4px; line-height: 1.5; }
 
     /* ═══ FILTROS PILLS ═══ */
     .filter-row {
       display: flex; gap: 8px;
       overflow-x: auto; scrollbar-width: none;
-      padding-bottom: 4px; margin-bottom: 20px;
+      padding: 0 20px 4px; margin-bottom: 20px;
       -webkit-overflow-scrolling: touch;
     }
     .filter-row::-webkit-scrollbar { display: none; }
@@ -117,7 +133,7 @@
       border: 1px solid var(--gray-border);
       border-radius: var(--r);
       overflow: hidden;
-      margin-bottom: 16px;
+      margin: 0 20px 16px;
       box-shadow: 0 2px 8px rgba(0,0,0,.04);
       transition: box-shadow .2s;
     }
@@ -182,7 +198,7 @@
       border: 1px solid var(--gray-border);
       border-radius: var(--r);
       overflow: hidden;
-      margin-bottom: 16px;
+      margin: 0 20px 16px;
       box-shadow: 0 2px 8px rgba(0,0,0,.04);
       transition: box-shadow .2s;
     }
@@ -233,7 +249,7 @@
     /* ═══ TENDENCIA CARD (horizontal) ═══ */
     .trend-card {
       display: flex; gap: 12px; align-items: flex-start;
-      padding: 14px 0;
+      padding: 14px 20px;
       border-bottom: 1px solid var(--gray-border);
     }
     .trend-card:last-child { border-bottom: none; }
@@ -453,7 +469,7 @@
   <!-- Card 2 -->
   <div class="article-card" data-tag="comportamiento">
     <div class="article-img" style="background:#ddd;">
-      <img src="gato ansioso.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      <img src="Gato ansioso.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
       <span class="article-cat-badge badge-comportamiento">Comportamiento</span>
     </div>
     <div class="article-body">
@@ -474,7 +490,7 @@
   <!-- Card 3 -->
   <div class="article-card" data-tag="salud">
     <div class="article-img" style="background:#ddd;">
-      <img src="vacunas.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      <img src="Vacunas.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
       <span class="article-cat-badge badge-salud">Salud</span>
     </div>
     <div class="article-body">
@@ -514,7 +530,7 @@
   <!-- Card destacada: Las 10 mejores plazas -->
   <div class="guide-card featured" data-tag="lugares">
     <div class="guide-img" style="background:#ddd;">
-      <img src="mejores plazas.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      <img src="Mejores plazas.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
       <div class="guide-featured-badge"><i class="fa-solid fa-star"></i> Guía destacada</div>
       <div class="guide-num-list"><i class="fa-solid fa-list-ol"></i> Top 10</div>
     </div>
@@ -543,7 +559,7 @@
   <!-- Card 2 -->
   <div class="article-card" data-tag="grooming">
     <div class="article-img" style="background:#ddd;">
-      <img src="peluqueria.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      <img src="Peluqueria.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
       <span class="article-cat-badge badge-grooming">Grooming</span>
     </div>
     <div class="article-body">
@@ -603,8 +619,8 @@
 
   <!-- Trend 1 -->
   <div class="trend-card" data-tag="productos">
-    <div class="trend-img" style="background: linear-gradient(135deg,#14B8A6,#5EEAD4)">
-      <i class="fa-solid fa-box-open"></i>
+    <div class="trend-img" style="background:#ddd;">
+      <img src="Freeze dried.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
     </div>
     <div class="trend-body">
       <div class="trend-cat">Nuevos productos</div>
@@ -619,8 +635,8 @@
 
   <!-- Trend 2 -->
   <div class="trend-card" data-tag="servicios">
-    <div class="trend-img" style="background: linear-gradient(135deg,#6366F1,#A5B4FC)">
-      <i class="fa-solid fa-stethoscope"></i>
+    <div class="trend-img" style="background:#ddd;">
+      <img src="Vet domicilio.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
     </div>
     <div class="trend-body">
       <div class="trend-cat">Servicios</div>
@@ -635,8 +651,8 @@
 
   <!-- Trend 3 -->
   <div class="trend-card" data-tag="legislacion">
-    <div class="trend-img" style="background: linear-gradient(135deg,#EF4444,#FCA5A5)">
-      <i class="fa-solid fa-scale-balanced"></i>
+    <div class="trend-img" style="background:#ddd;">
+      <img src="Ley bienestar.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
     </div>
     <div class="trend-body">
       <div class="trend-cat">Legislación</div>
@@ -651,8 +667,8 @@
 
   <!-- Trend 4 -->
   <div class="trend-card" data-tag="servicios">
-    <div class="trend-img" style="background: linear-gradient(135deg,#F59E0B,#FCD34D)">
-      <i class="fa-solid fa-mobile-screen"></i>
+    <div class="trend-img" style="background:#ddd;">
+      <img src="GPS.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
     </div>
     <div class="trend-body">
       <div class="trend-cat">Servicios</div>
@@ -667,8 +683,8 @@
 
   <!-- Trend 5 -->
   <div class="trend-card" data-tag="productos">
-    <div class="trend-img" style="background: linear-gradient(135deg,#BE185D,#F9A8D4)">
-      <i class="fa-solid fa-shirt"></i>
+    <div class="trend-img" style="background:#ddd;">
+      <img src="Ropa gato.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
     </div>
     <div class="trend-body">
       <div class="trend-cat">Nuevos productos</div>
