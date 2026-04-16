@@ -10,7 +10,7 @@
 
     :root {
       --coral:        #d1d161;
-      --coral-dark:   #b3b345;
+      --coral-dark:   #99b0ed;
       --dark:         #1C1C1E;
       --footer-bg:    #111827;
       --gray:         #6B7280;
@@ -124,7 +124,7 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(155deg, #1a1a08 0%, #2d2d14 100%);
+      background: linear-gradient(155deg, #12102a 0%, #1e1640 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -251,17 +251,17 @@
       width: 36px; height: 36px;
       border-radius: 50%;
       background: var(--white);
-      border: 1.5px solid var(--gray-border);
+      border: 1.5px solid var(--coral-dark);
       box-shadow: 0 2px 8px rgba(0,0,0,.12);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 13px;
-      color: var(--dark);
+      color: var(--coral-dark);
       cursor: pointer;
       transition: background .2s, color .2s, opacity .2s;
     }
-    .carousel-btn:hover { background: var(--coral); color: var(--white); border-color: var(--coral); }
+    .carousel-btn:hover { background: var(--coral-dark); color: var(--white); border-color: var(--coral-dark); }
     .carousel-btn:disabled { opacity: .3; pointer-events: none; }
 
     .cards-scroll {
@@ -348,13 +348,13 @@
 
     .acceso-icon {
       width: 56px; height: 56px;
-      background: rgba(209,209,97,.15);
+      background: rgba(153,176,237,.15);
       border-radius: var(--r-sm);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 26px;
-      color: var(--coral);
+      color: var(--coral-dark);
       flex-shrink: 0;
     }
     .acceso-text { flex: 1; }
@@ -367,7 +367,7 @@
 
     .eventos-banner {
       margin: 0 20px;
-      background: linear-gradient(135deg, #f8f8e0 0%, #e5eafc 100%);
+      background: linear-gradient(135deg, #f5f5d8 0%, #dde5fb 100%);
       border: 1px solid var(--gray-border);
       border-radius: var(--r);
       padding: 24px 20px;
@@ -446,7 +446,7 @@
       font-weight: 800;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--coral);
+      color: var(--coral-dark);
       margin-bottom: 4px;
     }
     .eventos-heading {
@@ -458,9 +458,9 @@
 
     /* ——— NEWSLETTER ——— */
     .newsletter {
-      background: #f8f8e8;
-      border-top: 1px solid #cddbf9;
-      border-bottom: 1px solid #cddbf9;
+      background: #edf2fc;
+      border-top: 2px solid #cddbf9;
+      border-bottom: 2px solid #cddbf9;
     }
     .newsletter-inner { padding: 0 24px; text-align: center; }
 
@@ -585,7 +585,7 @@
       text-decoration: none;
       transition: border-color .2s, color .2s;
     }
-    .footer-social-icons a:hover { border-color: var(--coral); color: var(--coral); }
+    .footer-social-icons a:hover { border-color: var(--coral-dark); color: var(--coral-dark); }
 
     .footer-divider {
       height: 1px;
