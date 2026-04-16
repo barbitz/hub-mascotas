@@ -447,11 +447,22 @@
 
     /* ——— NEWSLETTER ——— */
     .newsletter {
+      position: relative;
       background: #fef6e8;
       border-top: 1px solid #f5d9a8;
       border-bottom: 1px solid #f5d9a8;
+      overflow: hidden;
     }
-    .newsletter-inner { padding: 0 24px; text-align: center; }
+    .newsletter::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('Suscripción.jpg') center/cover no-repeat;
+      opacity: 0.18;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+    .newsletter-inner { position: relative; z-index: 1; padding: 0 24px; text-align: center; }
 
     .newsletter-title {
       font-size: 21px;
@@ -727,7 +738,7 @@
 
       <a href="#" class="acceso-item">
         <div class="acceso-icon">
-          <img src="Directorio.jpg" alt="Directorio" style="width:100%;height:100%;object-fit:cover;filter:hue-rotate(-100deg) saturate(1.3) brightness(0.95);">
+          <img src="Directorio.jpg" alt="Directorio" style="width:100%;height:100%;object-fit:cover;">
         </div>
         <div class="acceso-text">
           <h3>Directorio</h3>
@@ -749,7 +760,7 @@
 
       <a href="#" class="acceso-item">
         <div class="acceso-icon">
-          <img src="Noticias v2.jpg" alt="Noticias" style="width:100%;height:100%;object-fit:cover;filter:hue-rotate(-100deg) saturate(1.3) brightness(0.95);">
+          <img src="Noticias v2.jpg" alt="Noticias" style="width:100%;height:100%;object-fit:cover;">
         </div>
         <div class="acceso-text">
           <h3>Últimas noticias</h3>
@@ -773,41 +784,40 @@
     <div class="eventos-banner">
       <div class="date-pills-row" style="overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none; padding-bottom:4px;">
 
-        <!-- BIG — SAB 26 ABRIL -->
         <div class="date-pill">
           <div class="date-pill-header">SAB</div>
           <div class="date-pill-day">26</div>
           <div class="date-pill-month">ABRIL</div>
         </div>
 
-        <!-- SMALL — 03 MAY -->
-        <div class="date-pill date-pill-sm">
+        <div class="date-pill">
+          <div class="date-pill-header">SAB</div>
           <div class="date-pill-day">03</div>
-          <div class="date-pill-month">MAY</div>
+          <div class="date-pill-month">MAYO</div>
         </div>
 
-        <!-- SMALL — 17 MAY -->
-        <div class="date-pill date-pill-sm">
+        <div class="date-pill">
+          <div class="date-pill-header">SAB</div>
           <div class="date-pill-day">17</div>
-          <div class="date-pill-month">MAY</div>
+          <div class="date-pill-month">MAYO</div>
         </div>
 
-        <!-- SMALL — 24 MAY -->
-        <div class="date-pill date-pill-sm">
+        <div class="date-pill">
+          <div class="date-pill-header">SAB</div>
           <div class="date-pill-day">24</div>
-          <div class="date-pill-month">MAY</div>
+          <div class="date-pill-month">MAYO</div>
         </div>
 
-        <!-- SMALL — 07 JUN -->
-        <div class="date-pill date-pill-sm">
+        <div class="date-pill">
+          <div class="date-pill-header">VIE</div>
           <div class="date-pill-day">07</div>
-          <div class="date-pill-month">JUN</div>
+          <div class="date-pill-month">JUNIO</div>
         </div>
 
-        <!-- SMALL — 21 JUN -->
-        <div class="date-pill date-pill-sm">
+        <div class="date-pill">
+          <div class="date-pill-header">SAB</div>
           <div class="date-pill-day">21</div>
-          <div class="date-pill-month">JUN</div>
+          <div class="date-pill-month">JUNIO</div>
         </div>
 
       </div>
