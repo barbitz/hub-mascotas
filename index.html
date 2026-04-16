@@ -447,35 +447,57 @@
 
     /* ——— NEWSLETTER ——— */
     .newsletter {
-      position: relative;
       background: #fef6e8;
       border-top: 1px solid #f5d9a8;
       border-bottom: 1px solid #f5d9a8;
       overflow: hidden;
+      padding: 0 !important;
     }
-    .newsletter::before {
+    .newsletter-layout {
+      display: flex;
+      align-items: stretch;
+      min-height: 320px;
+    }
+    .newsletter-content {
+      flex: 1;
+      padding: 32px 20px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .newsletter-img-col {
+      width: 42%;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter-img-col img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .newsletter-img-col::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: url('Suscripción.jpg') center/cover no-repeat;
-      opacity: 0.18;
-      mix-blend-mode: multiply;
+      background: linear-gradient(to right, #fef6e8 0%, transparent 30%);
       pointer-events: none;
     }
-    .newsletter-inner { position: relative; z-index: 1; padding: 0 24px; text-align: center; }
+    .newsletter-inner { text-align: left; }
 
     .newsletter-title {
-      font-size: 21px;
+      font-size: 17px;
       font-weight: 800;
       color: var(--dark);
       line-height: 1.3;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .newsletter-sub {
-      font-size: 14px;
+      font-size: 12px;
       color: var(--gray);
       line-height: 1.6;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
     .newsletter-form { display: flex; flex-direction: column; gap: 12px; }
 
@@ -829,14 +851,21 @@
        NEWSLETTER
   ═══════════════════════════════ -->
   <section class="newsletter">
-    <div class="newsletter-inner">
-      <h2 class="newsletter-title">Recibe lo mejor de la semana en tu correo</h2>
-      <p class="newsletter-sub">Historias de adopción, recomendaciones y eventos. Sin spam.</p>
-      <form class="newsletter-form" onsubmit="return false;">
-        <input class="newsletter-input" type="email" placeholder="tucorreo@correo.cl">
-        <button class="btn-newsletter" type="submit">Suscribirme</button>
-      </form>
-      <p class="newsletter-legal">Al suscribirte aceptas nuestra <a href="#">política de privacidad</a></p>
+    <div class="newsletter-layout">
+      <div class="newsletter-content">
+        <div class="newsletter-inner">
+          <h2 class="newsletter-title">Recibe lo mejor de la semana en tu correo</h2>
+          <p class="newsletter-sub">Historias de adopción, recomendaciones y eventos. Sin spam.</p>
+          <form class="newsletter-form" onsubmit="return false;">
+            <input class="newsletter-input" type="email" placeholder="tucorreo@correo.cl">
+            <button class="btn-newsletter" type="submit">Suscribirme</button>
+          </form>
+          <p class="newsletter-legal">Al suscribirte aceptas nuestra <a href="#">política de privacidad</a></p>
+        </div>
+      </div>
+      <div class="newsletter-img-col">
+        <img src="Suscripción.jpg" alt="">
+      </div>
     </div>
   </section>
 
