@@ -46,6 +46,10 @@
     .page-header-title { flex: 1; text-align: center; font-size: 16px; font-weight: 700; color: var(--dark); }
     .page-header-spacer { width: 36px; flex-shrink: 0; }
 
+    /* ═══ BANNER ═══ */
+    .col-banner { width: 100%; aspect-ratio: 1080/750; overflow: hidden; }
+    .col-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
     /* ═══ BUSCADOR ═══ */
     .search-wrap { padding: 16px 20px; background: var(--white); border-bottom: 1px solid var(--gray-border); }
     .search-field {
@@ -99,7 +103,9 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 22px; color: rgba(255,255,255,.5);
       overflow: hidden; border: 2px solid var(--gray-border);
+      position: relative;
     }
+    .columnist-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .columnist-info { flex: 1; min-width: 0; padding-top: 2px; }
     .columnist-name { font-size: 15px; font-weight: 800; color: var(--dark); margin-bottom: 3px; }
     .columnist-specialty {
@@ -109,11 +115,14 @@
       background: rgba(255,90,69,.08); padding: 3px 8px;
       border-radius: var(--r-pill); margin-bottom: 5px;
     }
-    .columnist-bio { font-size: 12px; color: var(--gray); line-height: 1.5; }
+    .columnist-bio { display: none; }
 
     /* Contenido de la columna */
     .column-content { padding-left: 64px; }
-    .column-title { font-size: 16px; font-weight: 800; color: var(--dark); line-height: 1.35; margin-bottom: 7px; }
+    .column-title {
+      font-size: 16px; font-weight: 800; color: var(--dark); line-height: 1.35; margin-bottom: 7px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
     .column-excerpt { font-size: 13px; color: var(--gray); line-height: 1.6; margin-bottom: 12px; }
 
     /* Tags */
@@ -128,7 +137,7 @@
     .col-tag.amigos      { background: #FFF7ED; color: #D97706; border: 1px solid rgba(217,119,6,.2); }
 
     /* Footer de la card */
-    .column-footer { display: flex; align-items: center; justify-content: space-between; }
+    .column-footer { display: flex; flex-direction: column; gap: 10px; }
     .column-meta {
       display: flex; align-items: center; gap: 12px;
       font-size: 12px; color: var(--gray);
@@ -137,12 +146,14 @@
     .column-views i { font-size: 13px; }
     .column-date { font-size: 12px; color: var(--gray); }
     .btn-read-more {
-      display: flex; align-items: center; gap: 5px;
-      font-size: 12px; font-weight: 700; color: var(--coral);
-      background: none; border: none; cursor: pointer;
-      text-decoration: none; transition: gap .2s;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 20px; width: fit-content;
+      background: var(--coral); color: var(--white);
+      border: none; border-radius: var(--r-pill);
+      font-size: 12px; font-weight: 700; cursor: pointer;
+      text-decoration: none; transition: background .2s;
     }
-    .btn-read-more:hover { gap: 8px; }
+    .btn-read-more:hover { background: var(--coral-dark); }
 
     /* Divider decorativo entre secciones de columnistas */
     .columns-section-label {
@@ -223,6 +234,11 @@
   </div>
 </div>
 
+<!-- ═══════════════════════ BANNER ═══════════════════════ -->
+<div class="col-banner">
+  <img src="Banner Columna.jpg" alt="Columnas PETS HUB">
+</div>
+
 <!-- ═══════════════════════ FILTROS ═══════════════════════ -->
 <div class="filter-wrap">
   <div class="filter-row" id="filterRow">
@@ -245,7 +261,7 @@
   <div class="column-card" data-prof="veterinario">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#0EA5E9,#38BDF8)">
-        <i class="fa-solid fa-user-doctor"></i>
+        <img src="Pablo.jpg" alt="Dr. Pablo Henríquez">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">Dr. Pablo Henríquez</div>
@@ -264,7 +280,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 5.2k vistas</span>
           <span class="column-date">11 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -273,7 +289,7 @@
   <div class="column-card" data-prof="veterinario">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#6366F1,#A5B4FC)">
-        <i class="fa-solid fa-user-doctor"></i>
+        <img src="Renata.jpg" alt="Dra. Renata Lagos">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">Dra. Renata Lagos</div>
@@ -292,7 +308,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 8.7k vistas</span>
           <span class="column-date">8 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -303,7 +319,7 @@
   <div class="column-card" data-prof="etologo">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#10B981,#6EE7B7)">
-        <i class="fa-solid fa-brain"></i>
+        <img src="Carolina.jpg" alt="Lic. Carolina Meza">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">Lic. Carolina Meza</div>
@@ -323,7 +339,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 12.3k vistas</span>
           <span class="column-date">6 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -332,7 +348,7 @@
   <div class="column-card" data-prof="etologo">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#84CC16,#BEF264)">
-        <i class="fa-solid fa-brain"></i>
+        <img src="Ignacio.jpg" alt="Dr. Ignacio Salinas">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">Dr. Ignacio Salinas</div>
@@ -351,7 +367,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 9.4k vistas</span>
           <span class="column-date">3 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -362,7 +378,7 @@
   <div class="column-card" data-prof="psicologo">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#EC4899,#F9A8D4)">
-        <i class="fa-solid fa-heart"></i>
+        <img src="Sofia3.jpg" alt="Ps. Sofía Castillo">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">Ps. Sofía Castillo</div>
@@ -381,7 +397,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 21.6k vistas</span>
           <span class="column-date">9 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -390,7 +406,7 @@
   <div class="column-card" data-prof="psicologo">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#F43F5E,#FDA4AF)">
-        <i class="fa-solid fa-heart"></i>
+        <img src="Diego.jpg" alt="Ps. Diego Araya">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">Ps. Diego Araya</div>
@@ -409,7 +425,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 14.2k vistas</span>
           <span class="column-date">4 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -420,7 +436,7 @@
   <div class="column-card" data-prof="nutricionista">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#F59E0B,#FCD34D)">
-        <i class="fa-solid fa-bowl-food"></i>
+        <img src="Isabel.jpg" alt="Dra. Isabel Ramos">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">Dra. Isabel Ramos</div>
@@ -439,7 +455,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 18.9k vistas</span>
           <span class="column-date">10 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -448,7 +464,7 @@
   <div class="column-card" data-prof="nutricionista">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#D97706,#FDE68A)">
-        <i class="fa-solid fa-bowl-food"></i>
+        <img src="Tomas.jpg" alt="MV. Tomás Bravo">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">MV. Tomás Bravo</div>
@@ -467,7 +483,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 11.4k vistas</span>
           <span class="column-date">5 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -478,7 +494,7 @@
   <div class="column-card" data-prof="entrenador">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#7C3AED,#C4B5FD)">
-        <i class="fa-solid fa-medal"></i>
+        <img src="Jorge.jpg" alt="Jorge Vidal">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">Jorge Vidal</div>
@@ -497,7 +513,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 16.1k vistas</span>
           <span class="column-date">7 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -506,7 +522,7 @@
   <div class="column-card" data-prof="entrenador">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#A855F7,#E9D5FF)">
-        <i class="fa-solid fa-medal"></i>
+        <img src="Ana.jpg" alt="Ana Sepúlveda">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">Ana Sepúlveda</div>
@@ -525,7 +541,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 7.8k vistas</span>
           <span class="column-date">2 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -536,7 +552,7 @@
   <div class="column-card" data-prof="amigos">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#FF6B6B,#FF8E53)">
-        <i class="fa-solid fa-user"></i>
+        <img src="Valentina.jpg" alt="Valentina Torres">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">Valentina Torres</div>
@@ -555,7 +571,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 24.5k vistas</span>
           <span class="column-date">9 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -564,7 +580,7 @@
   <div class="column-card" data-prof="amigos">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#0EA5E9,#7DD3FC)">
-        <i class="fa-solid fa-user"></i>
+        <img src="Carlos.jpg" alt="Carlos Muñoz">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">Carlos Muñoz</div>
@@ -583,7 +599,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 31.2k vistas</span>
           <span class="column-date">6 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -592,7 +608,7 @@
   <div class="column-card" data-prof="amigos">
     <div class="columnist-profile">
       <div class="columnist-avatar" style="background: linear-gradient(135deg,#BE185D,#F9A8D4)">
-        <i class="fa-solid fa-user"></i>
+        <img src="Marcela.jpg" alt="Marcela Fuenzalida">
       </div>
       <div class="columnist-info">
         <div class="columnist-name">Marcela Fuenzalida</div>
@@ -611,7 +627,7 @@
           <span class="column-views"><i class="fa-regular fa-eye"></i> 19.7k vistas</span>
           <span class="column-date">1 abr 2026</span>
         </div>
-        <a href="#" class="btn-read-more">Leer más <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#" class="btn-read-more">Ver más <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
