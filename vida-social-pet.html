@@ -9,13 +9,13 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --coral:       #cf832b;
-      --coral-dark:  #b86e1f;
+      --coral:       #d1d161;
+      --coral-dark:  #b8b83e;
       --dark:        #1C1C1E;
-      --footer-bg:   #2a1a08;
+      --footer-bg:   #111827;
       --gray:        #6B7280;
-      --gray-light:  #fef3e2;
-      --gray-border: #f5d9a8;
+      --gray-light:  #e8eeff;
+      --gray-border: #99b0ed;
       --white:       #FFFFFF;
       --gold:        #F59E0B;
       --r:           12px;
@@ -24,7 +24,7 @@
     }
 
     html { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    body { background: #fffaf4; color: var(--dark); max-width: 430px; margin: 0 auto; overflow-x: hidden; }
+    body { background: #cddbf9; color: var(--dark); max-width: 430px; margin: 0 auto; overflow-x: hidden; }
 
     /* ═══ HEADER ═══ */
     .header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 60px; background: var(--white); border-bottom: 1px solid var(--gray-border); }
@@ -41,9 +41,9 @@
     .nav-link:last-child { border-bottom: none; }
 
     /* ═══ PAGE HEADER ═══ */
-    .page-header { display: flex; align-items: center; padding: 0 20px; height: 52px; background: #fdeccb; border-bottom: 2px solid #cf832b; margin-bottom: 8px; }
-    .page-header-back { width: 36px; background: none; border: none; font-size: 18px; color: #cf832b; cursor: pointer; display: flex; align-items: center; flex-shrink: 0; }
-    .page-header-title { flex: 1; text-align: center; font-size: 16px; font-weight: 700; color: #7a4a10; }
+    .page-header { display: flex; align-items: center; padding: 0 20px; height: 52px; background: #dce6f9; border-bottom: 2px solid #99b0ed; margin-bottom: 8px; }
+    .page-header-back { width: 36px; background: none; border: none; font-size: 18px; color: #99b0ed; cursor: pointer; display: flex; align-items: center; flex-shrink: 0; }
+    .page-header-title { flex: 1; text-align: center; font-size: 16px; font-weight: 700; color: var(--dark); }
     .page-header-spacer { width: 36px; flex-shrink: 0; }
 
     /* ═══ MAGAZINE LAYOUT ═══ */
@@ -63,16 +63,16 @@
     .mag-section + .mag-section { border-top: none; margin-top: 32px; }
 
     .mag-section-head {
-      background: #cf832b;
+      background: #99b0ed;
       padding: 16px 20px 14px;
       margin: -28px -20px 24px;
-      border-bottom: 2px solid #b86e1f;
+      border-bottom: 2px solid #7a97db;
       position: relative;
     }
     .mag-section-head::after {
       content: ''; position: absolute; bottom: -10px; left: 20px;
       border-left: 10px solid transparent; border-right: 10px solid transparent;
-      border-top: 10px solid #b86e1f;
+      border-top: 10px solid #7a97db;
     }
     .mag-eyebrow { color: rgba(255,255,255,.8); }
     .mag-section-title { font-size: 20px; font-weight: 900; color: #fff; line-height: 1.2; letter-spacing: -.4px; margin-top: 4px; }
