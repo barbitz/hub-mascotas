@@ -24,7 +24,7 @@
     }
 
     html { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    body { background: #fffaf4; color: var(--dark); max-width: 430px; margin: 0 auto; overflow-x: hidden; }
+    body { background: #fdeccb; color: var(--dark); max-width: 430px; margin: 0 auto; overflow-x: hidden; }
 
     /* ═══ HEADER ═══ */
     .header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 60px; background: var(--white); border-bottom: 1px solid var(--gray-border); }
@@ -41,7 +41,7 @@
     .nav-link:last-child { border-bottom: none; }
 
     /* ═══ PAGE HEADER ═══ */
-    .page-header { display: flex; align-items: center; padding: 0 20px; height: 52px; background: var(--white); border-bottom: 1px solid var(--gray-border); }
+    .page-header { display: flex; align-items: center; padding: 0 20px; height: 52px; background: #fdeccb; border-bottom: 2px solid #cf832b; }
     .page-header-back { width: 36px; background: none; border: none; font-size: 18px; color: var(--dark); cursor: pointer; display: flex; align-items: center; flex-shrink: 0; }
     .page-header-title { flex: 1; text-align: center; font-size: 16px; font-weight: 700; color: var(--dark); }
     .page-header-spacer { width: 36px; flex-shrink: 0; }
@@ -56,10 +56,11 @@
     }
 
     /* ═══ BUSCADOR ═══ */
-    .search-wrap { padding: 16px 20px; background: var(--white); border-bottom: 1px solid var(--gray-border); }
+    .search-wrap { padding: 16px 20px; background: #fdeccb; border-bottom: 1px solid #cf832b; }
     .search-field {
       display: flex; align-items: center; gap: 10px;
-      background: var(--gray-light); border-radius: var(--r-pill);
+      background: #fdeccb; border-radius: var(--r-sm);
+      border: 1.5px solid #cf832b;
       padding: 0 16px; height: 44px;
     }
     .search-field i { color: var(--gray); font-size: 15px; flex-shrink: 0; }
@@ -76,10 +77,10 @@
     .section-cards { padding: 0 20px; }
 
     .section-head {
-      background: #fdeccb;
+      background: #fdeccc;
       padding: 28px 20px 20px;
       margin-bottom: 20px;
-      border-bottom: 2px solid #f5c98a;
+      border-bottom: 2px solid #cf832b;
       position: relative;
     }
     .section-head::after {
@@ -89,7 +90,7 @@
       width: 0; height: 0;
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
-      border-top: 10px solid #f5c98a;
+      border-top: 10px solid #cf832b;
     }
     .section-eyebrow {
       display: inline-flex; align-items: center; gap: 6px;
@@ -114,9 +115,9 @@
       flex-shrink: 0;
       padding: 7px 16px;
       border-radius: var(--r-pill);
-      border: 1.5px solid var(--gray-border);
-      background: var(--white);
-      color: var(--gray);
+      border: 1.5px solid #cf832b;
+      background: #fdeccc;
+      color: #cf832b;
       font-size: 13px; font-weight: 600;
       cursor: pointer; transition: border-color .2s, background .2s, color .2s;
       white-space: nowrap;
@@ -125,12 +126,12 @@
       background: var(--coral); border-color: var(--coral);
       color: var(--white);
     }
-    .filter-pill:not(.active):hover { border-color: var(--coral); color: var(--coral); }
+    .filter-pill:not(.active):hover { border-color: var(--coral-dark); color: var(--coral-dark); }
 
     /* ═══ ARTICLE CARD (vertical, full width) ═══ */
     .article-card {
-      background: var(--white);
-      border: 1px solid var(--gray-border);
+      background: #fdeccb;
+      border: 1px solid #cf832b;
       border-radius: var(--r);
       overflow: hidden;
       margin: 0 20px 16px;
@@ -194,8 +195,8 @@
 
     /* ═══ GUIDE CARD (destacada) ═══ */
     .guide-card {
-      background: var(--white);
-      border: 1px solid var(--gray-border);
+      background: #fdeccb;
+      border: 1px solid #cf832b;
       border-radius: var(--r);
       overflow: hidden;
       margin: 0 20px 16px;
