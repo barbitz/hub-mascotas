@@ -41,7 +41,7 @@
     .nav-link:last-child { border-bottom: none; }
 
     /* ═══ PAGE HEADER ═══ */
-    .page-header { display: flex; align-items: center; padding: 0 20px; height: 52px; background: #fdeccb; border-bottom: 2px solid #cf832b; }
+    .page-header { display: flex; align-items: center; padding: 0 20px; height: 52px; background: #fdeccb; border-bottom: 2px solid #cf832b; margin-bottom: 8px; }
     .page-header-back { width: 36px; background: none; border: none; font-size: 18px; color: #cf832b; cursor: pointer; display: flex; align-items: center; flex-shrink: 0; }
     .page-header-title { flex: 1; text-align: center; font-size: 16px; font-weight: 700; color: #7a4a10; }
     .page-header-spacer { width: 36px; flex-shrink: 0; }
@@ -351,8 +351,9 @@
       width: 60px; height: 60px; border-radius: var(--r-sm);
       display: flex; align-items: center; justify-content: center;
       font-size: 26px; color: rgba(255,255,255,.4);
-      flex-shrink: 0; overflow: hidden;
+      flex-shrink: 0; overflow: hidden; position: relative;
     }
+    .ranking-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .ranking-info { flex: 1; min-width: 0; }
     .ranking-name { font-size: 14px; font-weight: 800; color: var(--dark); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .ranking-place { font-size: 11px; color: var(--gray); display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
@@ -410,8 +411,9 @@
       width: 64px; height: 64px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-size: 28px; color: rgba(255,255,255,.5);
-      flex-shrink: 0; overflow: hidden;
+      flex-shrink: 0; overflow: hidden; position: relative;
     }
+    .interview-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .interview-meta { flex: 1; padding-top: 4px; }
     .interview-name { font-size: 15px; font-weight: 800; color: var(--dark); margin-bottom: 2px; }
     .interview-sub { font-size: 12px; color: var(--gray); margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
@@ -706,7 +708,7 @@
         <div class="influencer-body">
           <div class="influencer-handle">@matias_pets</div>
           <div class="influencer-name">Matías V.</div>
-          <div class="influencer-pet"><i class="fa-solid fa-dog"></i> Thor, Golden 3 años</div>
+          <div class="influencer-pet"><i class="fa-solid fa-cat"></i> Pelota, Naranja 3 años</div>
         </div>
       </div>
 
@@ -718,7 +720,7 @@
         <div class="influencer-body">
           <div class="influencer-handle">@sofi.mascotas</div>
           <div class="influencer-name">Sofía M.</div>
-          <div class="influencer-pet"><i class="fa-solid fa-cat"></i> Nube, angora 2 años</div>
+          <div class="influencer-pet"><i class="fa-solid fa-dog"></i> Nube, Dálmata 3 años</div>
         </div>
       </div>
 
@@ -730,7 +732,7 @@
         <div class="influencer-body">
           <div class="influencer-handle">@carlos_petlover</div>
           <div class="influencer-name">Carlos P.</div>
-          <div class="influencer-pet"><i class="fa-solid fa-dog"></i> Luna, Labrador 4m</div>
+          <div class="influencer-pet"><i class="fa-solid fa-cat"></i> Luna, Angora 1 año</div>
         </div>
       </div>
 
@@ -753,7 +755,7 @@
 
       <div class="ranking-item rank-1">
         <div class="rank-badge">1</div>
-        <div class="ranking-thumb" style="background:linear-gradient(135deg,#92400E,#D97706)"><i class="fa-solid fa-mug-hot"></i></div>
+        <div class="ranking-thumb"><img src="La huella.jpg" alt="Café La Huella"></div>
         <div class="ranking-info">
           <div class="ranking-name">Café La Huella</div>
           <div class="ranking-place"><i class="fa-solid fa-location-dot"></i> Providencia · Café</div>
@@ -764,7 +766,7 @@
 
       <div class="ranking-item rank-2">
         <div class="rank-badge">2</div>
-        <div class="ranking-thumb" style="background:linear-gradient(135deg,#065F46,#34D399)"><i class="fa-solid fa-tree"></i></div>
+        <div class="ranking-thumb"><img src="Bicentenario.jpg" alt="Parque Bicentenario"></div>
         <div class="ranking-info">
           <div class="ranking-name">Parque Bicentenario</div>
           <div class="ranking-place"><i class="fa-solid fa-location-dot"></i> Vitacura · Parque</div>
@@ -775,7 +777,7 @@
 
       <div class="ranking-item rank-3">
         <div class="rank-badge">3</div>
-        <div class="ranking-thumb" style="background:linear-gradient(135deg,#1E3A8A,#60A5FA)"><i class="fa-solid fa-utensils"></i></div>
+        <div class="ranking-thumb"><img src="El patio.jpg" alt="Restaurante El Patio"></div>
         <div class="ranking-info">
           <div class="ranking-name">Restaurante El Patio</div>
           <div class="ranking-place"><i class="fa-solid fa-location-dot"></i> Lastarria · Rest.</div>
@@ -786,7 +788,7 @@
 
       <div class="ranking-item rank-4">
         <div class="rank-badge">4</div>
-        <div class="ranking-thumb" style="background:linear-gradient(135deg,#7C3AED,#C4B5FD)"><i class="fa-solid fa-store"></i></div>
+        <div class="ranking-thumb"><img src="petshop.jpg" alt="PetShop Bellavista"></div>
         <div class="ranking-info">
           <div class="ranking-name">PetShop Bellavista</div>
           <div class="ranking-place"><i class="fa-solid fa-location-dot"></i> Bellavista · Tienda</div>
@@ -797,7 +799,7 @@
 
       <div class="ranking-item rank-5">
         <div class="rank-badge">5</div>
-        <div class="ranking-thumb" style="background:linear-gradient(135deg,#BE185D,#F9A8D4)"><i class="fa-solid fa-spa"></i></div>
+        <div class="ranking-thumb"><img src="woolf.jpg" alt="Spa & Peluquería Woof"></div>
         <div class="ranking-info">
           <div class="ranking-name">Spa & Peluquería Woof</div>
           <div class="ranking-place"><i class="fa-solid fa-location-dot"></i> Ñuñoa · Peluquería</div>
@@ -827,12 +829,12 @@
         <div class="interview-card">
           <div class="interview-quote-mark">"</div>
           <div class="interview-top">
-            <div class="interview-avatar" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53)">
-              <i class="fa-solid fa-user"></i>
+            <div class="interview-avatar">
+              <img src="Valentina2.jpg" alt="Valentina Rojas">
             </div>
             <div class="interview-meta">
               <div class="interview-name">Valentina Rojas</div>
-              <div class="interview-sub"><i class="fa-solid fa-paw"></i> Con Coco, quiltro 1 año · Providencia</div>
+              <div class="interview-sub">Con Coco, quiltro 1 año · Providencia</div>
               <div class="interview-tags">
                 <span class="interview-tag">🐕 Adoptante</span>
                 <span class="interview-tag">Foodie pet</span>
@@ -848,12 +850,12 @@
         <div class="interview-card">
           <div class="interview-quote-mark">"</div>
           <div class="interview-top">
-            <div class="interview-avatar" style="background:linear-gradient(135deg,#6366F1,#A5B4FC)">
-              <i class="fa-solid fa-user"></i>
+            <div class="interview-avatar">
+              <img src="Matias2.jpg" alt="Matías Vera">
             </div>
             <div class="interview-meta">
               <div class="interview-name">Matías Vera</div>
-              <div class="interview-sub"><i class="fa-solid fa-paw"></i> Con Thor, Golden 3 años · Las Condes</div>
+              <div class="interview-sub">Con Pelota, Naranja 3 años · Las Condes</div>
               <div class="interview-tags">
                 <span class="interview-tag">🏃 Activo</span>
                 <span class="interview-tag">Parques</span>
@@ -869,12 +871,12 @@
         <div class="interview-card">
           <div class="interview-quote-mark">"</div>
           <div class="interview-top">
-            <div class="interview-avatar" style="background:linear-gradient(135deg,#10B981,#34D399)">
-              <i class="fa-solid fa-user"></i>
+            <div class="interview-avatar">
+              <img src="Sofia2.jpg" alt="Sofía Martínez">
             </div>
             <div class="interview-meta">
               <div class="interview-name">Sofía Martínez</div>
-              <div class="interview-sub"><i class="fa-solid fa-cat"></i> Con Nube, gata angora · Ñuñoa</div>
+              <div class="interview-sub">Con Nube, Dálmata 3 años · Ñuñoa</div>
               <div class="interview-tags">
                 <span class="interview-tag">🐱 Cat lover</span>
                 <span class="interview-tag">Cafeterías</span>
