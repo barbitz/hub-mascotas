@@ -9,13 +9,13 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --coral:       #FF5A45;
-      --coral-dark:  #E04330;
+      --coral:       #cf832b;
+      --coral-dark:  #b86e1f;
       --dark:        #1C1C1E;
-      --footer-bg:   #111827;
+      --footer-bg:   #2a1a08;
       --gray:        #6B7280;
-      --gray-light:  #F3F4F6;
-      --gray-border: #E5E7EB;
+      --gray-light:  #fef3e2;
+      --gray-border: #f5d9a8;
       --white:       #FFFFFF;
       --gold:        #F59E0B;
       --r:           12px;
@@ -24,7 +24,7 @@
     }
 
     html { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    body { background: var(--white); color: var(--dark); max-width: 430px; margin: 0 auto; overflow-x: hidden; }
+    body { background: #fffaf4; color: var(--dark); max-width: 430px; margin: 0 auto; overflow-x: hidden; }
 
     /* ═══ HEADER ═══ */
     .header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 60px; background: var(--white); border-bottom: 1px solid var(--gray-border); }
@@ -41,9 +41,9 @@
     .nav-link:last-child { border-bottom: none; }
 
     /* ═══ PAGE HEADER ═══ */
-    .page-header { display: flex; align-items: center; padding: 0 20px; height: 52px; background: var(--white); border-bottom: 1px solid var(--gray-border); }
-    .page-header-back { width: 36px; background: none; border: none; font-size: 18px; color: var(--dark); cursor: pointer; display: flex; align-items: center; flex-shrink: 0; }
-    .page-header-title { flex: 1; text-align: center; font-size: 16px; font-weight: 700; color: var(--dark); }
+    .page-header { display: flex; align-items: center; padding: 0 20px; height: 52px; background: #fdeccb; border-bottom: 2px solid #cf832b; }
+    .page-header-back { width: 36px; background: none; border: none; font-size: 18px; color: #cf832b; cursor: pointer; display: flex; align-items: center; flex-shrink: 0; }
+    .page-header-title { flex: 1; text-align: center; font-size: 16px; font-weight: 700; color: #7a4a10; }
     .page-header-spacer { width: 36px; flex-shrink: 0; }
 
     /* ═══ MAGAZINE LAYOUT ═══ */
@@ -52,18 +52,30 @@
     /* Eyebrow etiqueta */
     .mag-eyebrow {
       display: inline-flex; align-items: center; gap: 6px;
-      font-size: 10px; font-weight: 800; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--coral);
+      font-size: 13px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: #cf832b;
     }
-    .mag-eyebrow::before { content: ''; display: block; width: 20px; height: 2px; background: var(--coral); border-radius: 2px; }
+    .mag-eyebrow i { display: none; }
+    .mag-eyebrow::before { display: none; }
 
     /* Divider de sección tipo revista */
     .mag-section { padding: 28px 20px 0; }
-    .mag-section + .mag-section { border-top: 1px solid var(--gray-border); margin-top: 32px; }
+    .mag-section + .mag-section { border-top: none; margin-top: 32px; }
 
-    .mag-section-head { margin-bottom: 20px; }
-    .mag-section-title { font-size: 22px; font-weight: 900; color: var(--dark); line-height: 1.2; letter-spacing: -.4px; margin-top: 6px; }
-    .mag-section-sub { font-size: 13px; color: var(--gray); margin-top: 4px; line-height: 1.5; }
+    .mag-section-head {
+      background: #fdeccb;
+      padding: 16px 20px 14px;
+      margin: -28px -20px 24px;
+      border-bottom: 2px solid #f5c98a;
+      position: relative;
+    }
+    .mag-section-head::after {
+      content: ''; position: absolute; bottom: -10px; left: 20px;
+      border-left: 10px solid transparent; border-right: 10px solid transparent;
+      border-top: 10px solid #f5c98a;
+    }
+    .mag-section-title { font-size: 20px; font-weight: 900; color: #7a4a10; line-height: 1.2; letter-spacing: -.4px; margin-top: 4px; }
+    .mag-section-sub { font-size: 13px; color: #a0693a; margin-top: 4px; line-height: 1.5; }
 
     /* ═══ HERO EDITORIAL ═══ */
     .hero-editorial {
@@ -242,9 +254,10 @@
       width: 100%; aspect-ratio: 4/3;
       display: flex; align-items: center; justify-content: center;
       font-size: 38px; color: rgba(255,255,255,.4);
-      cursor: pointer; overflow: hidden; transition: filter .2s;
+      cursor: pointer; overflow: hidden; position: relative; transition: filter .2s;
     }
     .gallery-single-photo:hover { filter: brightness(.83); }
+    .gallery-single-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
     /* Grid 2 columnas para la sección de eventos */
     .gallery-events-grid {
@@ -292,6 +305,7 @@
       font-size: 48px; color: rgba(255,255,255,.35);
       position: relative; overflow: hidden;
     }
+    .influencer-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .influencer-loc {
       position: absolute; bottom: 8px; left: 8px;
       background: rgba(0,0,0,.55); color: var(--white);
@@ -612,26 +626,8 @@
 
 <!-- ═══════════════════════ HERO EDITORIAL ═══════════════════════ -->
 <div class="hero-editorial">
-  <div class="hero-editorial-bg">
-    <!-- Sol -->
-    <div class="hero-scene-sun"></div>
-    <!-- Nubes -->
-    <div class="hero-scene-cloud hero-scene-cloud-1"></div>
-    <div class="hero-scene-cloud hero-scene-cloud-2"></div>
-    <!-- Árbol -->
-    <div class="hero-scene-tree">
-      <div class="hero-scene-tree-top"></div>
-      <div class="hero-scene-tree-trunk"></div>
-    </div>
-    <!-- Persona jugando con perro -->
-    <div class="hero-scene-figures">
-      <i class="fa-solid fa-person-running fig-person"></i>
-      <i class="fa-solid fa-dog fig-dog"></i>
-    </div>
-    <!-- Pelota -->
-    <div class="hero-scene-ball"></div>
-    <!-- Césped -->
-    <div class="hero-scene-ground"></div>
+  <div class="hero-editorial-bg" style="background:none;">
+    <img src="Escena.jpg" alt="La escena pet-friendly" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
   </div>
   <div class="hero-editorial-overlay"></div>
   <div class="hero-editorial-body">
@@ -645,7 +641,7 @@
   <!-- ═══════════════════════ SECCIÓN: FOTOGALERÍAS ═══════════════════════ -->
   <div class="mag-section">
     <div class="mag-section-head">
-      <div class="mag-eyebrow"><i class="fa-solid fa-calendar"></i> EVENTOS</div>
+      <div class="mag-eyebrow">EVENTOS</div>
       <h2 class="mag-section-title">Eventos abril 2026</h2>
       <p class="mag-section-sub">Lo mejor de las inauguraciones, pet walks y encuentros del mes.</p>
     </div>
@@ -654,8 +650,8 @@
 
       <!-- Evento 1: Pet Walk Bellavista -->
       <div class="gallery-card">
-        <div class="gallery-single-photo" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53)" onclick="openLightbox('petwalk',0)">
-          <i class="fa-solid fa-dog"></i>
+        <div class="gallery-single-photo" style="background:#e8c99a;" onclick="openLightbox('petwalk',0)">
+          <img src="Pet walk.jpg" alt="Pet Walk Bellavista 2026">
         </div>
         <div class="gallery-footer">
           <div class="gallery-title-text">Pet Walk Bellavista 2026</div>
@@ -666,8 +662,8 @@
 
       <!-- Evento 2: Inauguración Café La Huella -->
       <div class="gallery-card">
-        <div class="gallery-single-photo" style="background:linear-gradient(135deg,#92400E,#D97706)" onclick="openLightbox('cafe',0)">
-          <i class="fa-solid fa-mug-hot"></i>
+        <div class="gallery-single-photo" style="background:#e8c99a;" onclick="openLightbox('cafe',0)">
+          <img src="Huella.jpg" alt="Inauguración Café La Huella">
         </div>
         <div class="gallery-footer">
           <div class="gallery-title-text">Inauguración Café La Huella</div>
@@ -683,7 +679,7 @@
   <!-- ═══════════════════════ SECCIÓN: INFLUENCERS ═══════════════════════ -->
   <div class="mag-section">
     <div class="mag-section-head">
-      <div class="mag-eyebrow"><i class="fa-solid fa-star"></i> Personajes</div>
+      <div class="mag-eyebrow">Personajes</div>
       <h2 class="mag-section-title">Ellos y sus mascotas</h2>
       <p class="mag-section-sub">Influencers y figuras locales en los lugares más emblemáticos de la ciudad.</p>
     </div>
@@ -691,8 +687,8 @@
     <div class="influencers-grid">
 
       <div class="influencer-card" onclick="openLightbox('inf1', 0)">
-        <div class="influencer-img" style="background:linear-gradient(145deg,#FF6B6B,#FF8E53)">
-          <i class="fa-solid fa-user"></i>
+        <div class="influencer-img" style="background:#e8c99a;">
+          <img src="Valentina.jpg" alt="Valentina R.">
           <div class="influencer-loc"><i class="fa-solid fa-location-dot"></i> Lastarria</div>
         </div>
         <div class="influencer-body">
@@ -703,8 +699,8 @@
       </div>
 
       <div class="influencer-card" onclick="openLightbox('inf2', 0)">
-        <div class="influencer-img" style="background:linear-gradient(145deg,#6366F1,#A5B4FC)">
-          <i class="fa-solid fa-user"></i>
+        <div class="influencer-img" style="background:#e8c99a;">
+          <img src="Matias.jpg" alt="Matías V.">
           <div class="influencer-loc"><i class="fa-solid fa-location-dot"></i> Bellavista</div>
         </div>
         <div class="influencer-body">
@@ -715,8 +711,8 @@
       </div>
 
       <div class="influencer-card" onclick="openLightbox('inf3', 0)">
-        <div class="influencer-img" style="background:linear-gradient(145deg,#10B981,#34D399)">
-          <i class="fa-solid fa-user"></i>
+        <div class="influencer-img" style="background:#e8c99a;">
+          <img src="Sofia.jpg" alt="Sofía M.">
           <div class="influencer-loc"><i class="fa-solid fa-location-dot"></i> Parque Araucano</div>
         </div>
         <div class="influencer-body">
@@ -727,8 +723,8 @@
       </div>
 
       <div class="influencer-card" onclick="openLightbox('inf4', 0)">
-        <div class="influencer-img" style="background:linear-gradient(145deg,#F59E0B,#FCD34D)">
-          <i class="fa-solid fa-user"></i>
+        <div class="influencer-img" style="background:#e8c99a;">
+          <img src="Carlos.jpg" alt="Carlos P.">
           <div class="influencer-loc"><i class="fa-solid fa-location-dot"></i> Vitacura</div>
         </div>
         <div class="influencer-body">
@@ -748,7 +744,7 @@
   <!-- ═══════════════════════ SECCIÓN: TOP 5 ═══════════════════════ -->
   <div class="mag-section">
     <div class="mag-section-head">
-      <div class="mag-eyebrow"><i class="fa-solid fa-trophy"></i> Ranking</div>
+      <div class="mag-eyebrow">Ranking</div>
       <h2 class="mag-section-title">Top 5 Lugares del Mes</h2>
       <p class="mag-section-sub">Los favoritos de la comunidad durante abril 2026.</p>
     </div>
@@ -816,7 +812,7 @@
   <!-- ═══════════════════════ SECCIÓN: ENTREVISTAS ═══════════════════════ -->
   <div class="mag-section" style="padding-bottom: 36px;">
     <div class="mag-section-head">
-      <div class="mag-eyebrow"><i class="fa-solid fa-microphone"></i> Entrevistas</div>
+      <div class="mag-eyebrow">Entrevistas</div>
       <h2 class="mag-section-title">Dueños y sus mascotas</h2>
       <p class="mag-section-sub">Conversaciones breves con la comunidad pet-friendly de Santiago.</p>
     </div>
