@@ -9,8 +9,8 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --coral:       #cf832b;
-      --coral-dark:  #b86e1f;
+      --coral:       #f06a30;
+      --coral-dark:  #d4561a;
       --dark:        #1C1C1E;
       --footer-bg:   #2a1a08;
       --gray:        #6B7280;
@@ -38,7 +38,7 @@
       position: sticky; top: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 20px; height: 60px;
-      background: var(--white); border-bottom: 1px solid var(--gray-border);
+      background: #fdeccb; border-bottom: 1px solid var(--gray-border);
     }
     .header-logo { font-size: 18px; font-weight: 900; letter-spacing: 3px; color: var(--dark); }
     .hamburger-btn {
@@ -81,9 +81,9 @@
     .page-header {
       display: flex; align-items: center;
       padding: 0 20px; height: 52px;
-      background: #fdeccb; border-bottom: 2px solid #cf832b;
+      background: #fdeccb; border-bottom: 2px solid #f06a30;
     }
-    .page-header-back { color: #cf832b; }
+    .page-header-back { color: #f06a30; }
     .page-header-title { color: #7a4a10; }
     .page-header-back {
       width: 36px; background: none; border: none;
@@ -105,7 +105,7 @@
     .search-wrap { position: relative; margin-bottom: 16px; }
     .search-input {
       width: 100%; padding: 13px 44px 13px 16px;
-      border: 1.5px solid #cf832b; border-radius: var(--r-sm);
+      border: 1.5px solid #f06a30; border-radius: var(--r-sm);
       font-size: 15px; color: var(--dark);
       background: #fdeccb; outline: none;
       transition: border-color .2s, background .2s;
@@ -115,6 +115,18 @@
     .search-icon {
       position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
       font-size: 16px; color: var(--gray); pointer-events: none;
+    }
+
+    /* Banner adopción */
+    .adop-banner {
+      width: 100%;
+      aspect-ratio: 1080 / 550;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .adop-banner img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
     }
 
     /* ═══════════════════════════
@@ -129,9 +141,9 @@
       display: inline-flex; align-items: center; gap: 6px;
       padding: 8px 16px;
       border-radius: var(--r-pill);
-      border: 1.5px solid #cf832b;
+      border: 1.5px solid #f06a30;
       background: #fdeccc;
-      font-size: 13px; font-weight: 600; color: #cf832b;
+      font-size: 13px; font-weight: 600; color: #f06a30;
       cursor: pointer;
       transition: border-color .2s, background .2s;
       position: relative;
@@ -190,14 +202,14 @@
       position: absolute; top: 50%; transform: translateY(-50%);
       z-index: 10;
       width: 32px; height: 32px; border-radius: 50%;
-      background: #cf832b; color: #fff;
+      background: #f06a30; color: #fff;
       border: none; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       font-size: 16px; font-weight: 700; line-height: 1;
       box-shadow: 0 2px 8px rgba(0,0,0,.25);
       transition: background .2s, opacity .2s;
     }
-    .gallery-arrow:hover { background: #b86e1f; }
+    .gallery-arrow:hover { background: #d4561a; }
     .gallery-arrow.hidden { opacity: 0; pointer-events: none; }
     .gallery-prev { left: -10px; }
     .gallery-next { right: -10px; }
@@ -218,7 +230,7 @@
       position: relative; overflow: hidden;
       border: 1px solid var(--gray-border);
     }
-    .gallery-thumb:first-child { border: 2px solid var(--coral); }
+    .gallery-thumb { border: 2px solid var(--coral); }
 
     .gallery-thumb-overlay {
       position: absolute; inset: 0;
@@ -283,8 +295,8 @@
       overflow: hidden; flex-shrink: 0;
       background: #f5d9a8;
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px; color: #cf832b;
-      border: 2px solid #cf832b;
+      font-size: 18px; color: #f06a30;
+      border: 2px solid #f06a30;
     }
     .pet-foundation-icon img {
       width: 100%; height: 100%; object-fit: cover;
@@ -298,7 +310,7 @@
       width: 100%; padding: 16px;
       background: var(--coral); color: var(--white);
       font-size: 16px; font-weight: 800;
-      border: none; border-radius: 6px;
+      border: none; border-radius: 0;
       cursor: pointer; text-decoration: none;
       transition: background .2s;
       margin-bottom: 4px;
@@ -310,18 +322,18 @@
     ═══════════════════════════ */
     .section-block { margin-bottom: 36px; }
     .section-block-title {
-      font-size: 20px; font-weight: 800; color: #7a4a10;
+      font-size: 20px; font-weight: 800; color: var(--dark);
       margin-bottom: 16px; letter-spacing: -.3px;
-      background: #fdeccc; padding: 12px 20px 10px;
+      background: #fff6f4; padding: 12px 20px 10px;
       margin-left: -20px; margin-right: -20px;
-      border-bottom: 2px solid #cf832b;
+      border-bottom: 2px solid #f06a30;
       position: relative;
       display: flex; align-items: center; gap: 8px;
     }
     .section-block-title::after {
       content:''; position:absolute; bottom:-10px; left:20px;
       border-left:10px solid transparent; border-right:10px solid transparent;
-      border-top:10px solid #cf832b;
+      border-top:10px solid #f06a30;
     }
 
     .pets-grid {
@@ -330,8 +342,8 @@
       gap: 14px;
     }
     .pet-card {
-      background: #fdeccb;
-      border: 1px solid #cf832b;
+      background: #fff6f4;
+      border: 1px solid #f06a30;
       border-radius: var(--r);
       overflow: hidden;
       box-shadow: 0 2px 8px rgba(0,0,0,.05);
@@ -396,6 +408,24 @@
     /* ═══════════════════════════
        SECCIÓN ORGANIZACIONES
     ═══════════════════════════ */
+    .orgs-wrapper {
+      position: relative;
+    }
+    .orgs-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 10;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #f06a30; color: #fff;
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; line-height: 1;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+      transition: background .2s, opacity .2s;
+    }
+    .orgs-arrow:hover { background: #d4561a; }
+    .orgs-arrow.hidden { opacity: 0; pointer-events: none; }
+    .orgs-prev { left: -10px; }
+    .orgs-next { right: -10px; }
     .orgs-scroll {
       display: flex; gap: 12px;
       overflow-x: auto; padding-bottom: 8px;
@@ -405,8 +435,8 @@
 
     .org-card {
       flex: 0 0 130px;
-      background: #fdeccb;
-      border: 1px solid #cf832b;
+      background: #fff6f4;
+      border: 1px solid #f06a30;
       border-radius: var(--r);
       padding: 16px 12px;
       display: flex; flex-direction: column; align-items: center; gap: 10px;
@@ -420,8 +450,9 @@
       width: 56px; height: 56px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-size: 24px; color: var(--white);
-      flex-shrink: 0;
+      flex-shrink: 0; overflow: hidden;
     }
+    .org-logo img { width: 100%; height: 100%; object-fit: cover; }
     .org-name {
       font-size: 12px; font-weight: 700; color: var(--dark);
       text-align: center; line-height: 1.3;
@@ -527,6 +558,11 @@
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
     </div>
 
+    <!-- Banner -->
+    <div class="adop-banner">
+      <img src="../assets/adopcion/banner adopcion.jpg" alt="Banner Adopción">
+    </div>
+
     <!-- Filtros -->
     <div class="filters-row" id="filtersRow">
 
@@ -589,6 +625,9 @@
     <!-- ═══════════════════════
          PERFIL: COCO
     ═══════════════════════ -->
+    <div class="section-block">
+      <h2 class="section-block-title">Destacado</h2>
+    </div>
     <div class="pet-profile">
 
       <!-- Nombre y disponibilidad -->
@@ -662,7 +701,7 @@
          MASCOTAS DISPONIBLES
     ═══════════════════════ -->
     <div class="section-block">
-      <h2 class="section-block-title"><i class="fa-solid fa-star" style="color:#cf832b; font-size:16px;"></i>Mascotas disponibles</h2>
+      <h2 class="section-block-title">Mascotas disponibles</h2>
 
       <div class="pets-grid">
 
@@ -757,51 +796,55 @@
          ORGANIZACIONES
     ═══════════════════════ -->
     <div class="section-block">
-      <h2 class="section-block-title"><i class="fa-solid fa-star" style="color:#cf832b; font-size:16px;"></i>Organizaciones</h2>
+      <h2 class="section-block-title">Organizaciones</h2>
 
-      <div class="orgs-scroll">
+      <div class="orgs-wrapper">
+        <button class="orgs-arrow orgs-prev hidden" id="orgsPrev" aria-label="Anterior">&#8249;</button>
+        <div class="orgs-scroll" id="orgsScroll">
 
         <div class="org-card">
-          <div class="org-logo" style="background: linear-gradient(135deg,#FF5A45,#FF8A70)">
-            <i class="fa-solid fa-paw"></i>
+          <div class="org-logo">
+            <img src="../assets/adopcion/Fundación Julieta.jpg" alt="Fundación Julieta">
           </div>
           <div class="org-name">Fundación Julieta</div>
           <div class="org-count"><strong>14</strong> mascotas</div>
         </div>
 
         <div class="org-card">
-          <div class="org-logo" style="background: linear-gradient(135deg,#059669,#34D399)">
-            <i class="fa-solid fa-dog"></i>
+          <div class="org-logo">
+            <img src="../assets/adopcion/Huesped animal.jpg" alt="Huéspeda Animal">
           </div>
           <div class="org-name">Huéspeda Animal</div>
           <div class="org-count"><strong>22</strong> mascotas</div>
         </div>
 
         <div class="org-card">
-          <div class="org-logo" style="background: linear-gradient(135deg,#7C3AED,#A78BFA)">
-            <i class="fa-solid fa-cat"></i>
+          <div class="org-logo">
+            <img src="../assets/adopcion/Refugio.jpg" alt="Refugio El Canelo">
           </div>
           <div class="org-name">Refugio El Canelo</div>
           <div class="org-count"><strong>9</strong> mascotas</div>
         </div>
 
         <div class="org-card">
-          <div class="org-logo" style="background: linear-gradient(135deg,#D97706,#FCD34D)">
-            <i class="fa-solid fa-heart"></i>
+          <div class="org-logo">
+            <img src="../assets/adopcion/adopta un amigo.jpg" alt="Adopta un Amigo">
           </div>
           <div class="org-name">Adopta un Amigo</div>
           <div class="org-count"><strong>17</strong> mascotas</div>
         </div>
 
         <div class="org-card">
-          <div class="org-logo" style="background: linear-gradient(135deg,#0EA5E9,#7DD3FC)">
-            <i class="fa-solid fa-house-chimney-medical"></i>
+          <div class="org-logo">
+            <img src="../assets/adopcion/Rescate.jpg" alt="Red de Rescate Santiago">
           </div>
           <div class="org-name">Red de Rescate Santiago</div>
           <div class="org-count"><strong>31</strong> mascotas</div>
         </div>
 
-      </div>
+        </div>
+        <button class="orgs-arrow orgs-next" id="orgsNext" aria-label="Siguiente">&#8250;</button>
+      </div><!-- /orgs-wrapper -->
     </div>
 
   </div><!-- /adop-content -->
@@ -938,6 +981,27 @@
     });
     galleryScroll.addEventListener('scroll', updateGalleryArrows, { passive: true });
     updateGalleryArrows();
+
+    // ——— Carousel Organizaciones ———
+    const orgsScroll = document.getElementById('orgsScroll');
+    const orgsPrev   = document.getElementById('orgsPrev');
+    const orgsNext   = document.getElementById('orgsNext');
+
+    function updateOrgsArrows() {
+      const atStart = orgsScroll.scrollLeft <= 4;
+      const atEnd   = orgsScroll.scrollLeft + orgsScroll.clientWidth >= orgsScroll.scrollWidth - 4;
+      orgsPrev.classList.toggle('hidden', atStart);
+      orgsNext.classList.toggle('hidden', atEnd);
+    }
+
+    orgsPrev.addEventListener('click', () => {
+      orgsScroll.scrollBy({ left: -150, behavior: 'smooth' });
+    });
+    orgsNext.addEventListener('click', () => {
+      orgsScroll.scrollBy({ left: 150, behavior: 'smooth' });
+    });
+    orgsScroll.addEventListener('scroll', updateOrgsArrows, { passive: true });
+    updateOrgsArrows();
 
     // ——— Favoritos (corazones) ———
     document.querySelectorAll('.pet-card-fav').forEach(btn => {
